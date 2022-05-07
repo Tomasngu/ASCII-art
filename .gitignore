@@ -1,0 +1,7 @@
+#Object files
+*.o
+*.out
+*.vscode
+*.devcontainer
+*.dSYM
+*.tga

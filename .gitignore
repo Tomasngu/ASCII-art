@@ -5,3 +5,4 @@
 *.devcontainer
 *.dSYM
 *.tga
+test.cpp

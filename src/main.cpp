@@ -3,6 +3,7 @@
 
 int main(void){
     CFormatTGA f;
-    f.loadFile("vagner.tga");
+    CImage image =  f.loadFile("vagner.tga");
+    image.Render();
     return 0;
 }

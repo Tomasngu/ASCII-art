@@ -11,9 +11,9 @@
 class CFormat{
 public:
     virtual CImage loadFile(const std::string &) const = 0;
-protected:
     struct Pixel{
         std::uint8_t R, G, B;
     };
+    static std::uint8_t getGrayscale(Pixel pix);
 };
 

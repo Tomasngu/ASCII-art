@@ -1,14 +1,13 @@
 CXX=g++
-CXXFLAGS = -g -std=c++17 -Wall -pedantic
+CXXFLAGS = -g -std=c++17 -Wall -pedantic -fsanitize=address
 
 all: psfit
-
+	-rm -f src/*.o
 run: psfit
 	-rm -f src/*.o
-	-rm psfit
 	./psfit
 
-psfit: src/main.o src/CFormatTGA.o 
+psfit: src/main.o src/CFormatTGA.o src/CImage.o src/CFormat.o
 	$(CXX) $(CXXFLAGS) -o $@ $^ 
 
 %.o: %.cpp

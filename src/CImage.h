@@ -2,11 +2,18 @@
 
 #include<vector>
 #include<iostream>
+#include<map>
 
-struct CImage{
+class CImage{
 public:
+    CImage(void) = default;
+    CImage( std::uint16_t height, std::uint16_t width);
+    void printmySize(void);
     void Render() const;
-    size_t m_Height;
-    size_t m_Width;
-    std::vector<std::vector<uint8_t>> m_Pixels;
+    std::vector<std::vector<std::uint8_t>> m_Pixels;
+
+private:
+    std::uint16_t m_Height;
+    std::uint16_t m_Width;
+    static std::map<int, char> numtoAscii;
 };

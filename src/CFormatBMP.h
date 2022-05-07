@@ -1,5 +1,4 @@
 #pragma once
-#include<cassert>
 #include "CFormat.h"
 
 class CFormatTGA : public CFormat{

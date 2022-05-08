@@ -2,6 +2,6 @@
 
 #include "CFilter.h"
 
-class CFilterRotate : public CFilter{
+class CFilterInverse : public CFilter{
     virtual void edit(CImage &) const override;
 };

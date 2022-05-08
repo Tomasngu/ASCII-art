@@ -4,5 +4,5 @@
 *.vscode
 *.devcontainer
 *.dSYM
-test.cpp
+app
 test*

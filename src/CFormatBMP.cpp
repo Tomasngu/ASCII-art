@@ -7,6 +7,7 @@ CImage CFormatBMP::loadFile(const std::string & fileName ) const{
     validFormat(ifs, fileName, headerDip);
     CImage image(headerDip.Height, headerDip.Width);
     bool upsideDown = true;
+    //TODO compressed
     std::uint32_t padding = 4 - (headerDip.Width*3) % 4;
     for(std::uint32_t h = 0 ; h < headerDip.Height; ++h){
         for(std::uint32_t w = 0; w < headerDip.Width; ++w){

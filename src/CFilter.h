@@ -1,6 +1,7 @@
 #pragma once
 
+#include "CImage.h"
+
 class CFilter{
-    virtual void loadFile();
-    
+    virtual void edit(CImage &) const;    
 };

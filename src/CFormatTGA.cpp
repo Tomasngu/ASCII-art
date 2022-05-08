@@ -2,14 +2,14 @@
 
 CImage CFormatTGA::loadFile(const std::string & fileName ) const{
     std::ifstream ifs(fileName, std::ios::in | std::ios::binary);
-    Header header;
+    HeaderTGA header;
     validFormat(ifs, fileName, header);
     std::uint16_t Width =  header.Width;
     std::uint16_t Height = header.Height;
     CImage image(Height, Width);
     // image.printmySize();
     // std::cout << (int)header.imageType << std:: endl;
-    std::cout << (int)header.bitsPerPixel << std:: endl;
+    // std::cout << (int)header.bitsPerPixel << std:: endl;
     
     bool upsideDown = ! (bool) (header.Alpha & (1 << 5) );
     //TODO compressed image
@@ -32,7 +32,7 @@ CImage CFormatTGA::loadFile(const std::string & fileName ) const{
     return image;
 }
 
-bool CFormatTGA::validFormat(std::ifstream & ifs, const std::string & fileName, Header & header)const{
+bool CFormatTGA::validFormat(std::ifstream & ifs, const std::string & fileName, HeaderTGA & header)const{
     if(!ifs.good()) throw std::invalid_argument("Failed to read file " + fileName);
     ifs.read(reinterpret_cast<char *>(&header), sizeof(header));
     if(!ifs.good()) throw std::invalid_argument("Reading failed after header " + fileName);

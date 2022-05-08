@@ -16,4 +16,5 @@ private:
     std::uint16_t m_Height;
     std::uint16_t m_Width;
     static std::map<int, char> numtoAscii;
+    static std::map<int, char> numtoAscii2;
 };

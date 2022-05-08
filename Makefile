@@ -7,7 +7,7 @@ run: psfit
 	-rm -f src/*.o
 	./psfit
 
-psfit: src/main.o src/CFormatTGA.o src/CImage.o src/CFormat.o
+psfit: src/main.o src/CFormatTGA.o src/CImage.o src/CFormat.o src/CFormatBMP.o
 	$(CXX) $(CXXFLAGS) -o $@ $^ 
 
 %.o: %.cpp

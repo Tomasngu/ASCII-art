@@ -6,7 +6,7 @@ class CFormatTGA : public CFormat{
 public:
     virtual CImage loadFile(const std::string & ) const override;
 private:
-    struct Header{
+    struct HeaderTGA{
         std::uint8_t ID_length;
         std::uint8_t colorMapType;
         std::uint8_t imageType;
@@ -17,6 +17,6 @@ private:
         std::uint8_t bitsPerPixel;
         std::uint8_t Alpha;
     };
-    bool validFormat(std::ifstream &, const std::string &, Header &) const;
+    bool validFormat(std::ifstream &, const std::string &, HeaderTGA &) const;
 
 };

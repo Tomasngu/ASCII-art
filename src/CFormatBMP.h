@@ -1,21 +1,25 @@
 #pragma once
 #include "CFormat.h"
 
-class CFormatTGA : public CFormat{
+class CFormatBMP : public CFormat{
 public:
     virtual CImage loadFile(const std::string & ) const override;
 private:
-    struct Header{
-        std::uint8_t ID_length;
-        std::uint8_t colorMapType;
-        std::uint8_t imageType;
-        std::uint8_t colorSpecs[5];
-        std::uint8_t Coords[4];
-        std::uint16_t Width;          
-        std::uint16_t Height; 
-        std::uint8_t bitsPerPixel;
-        std::uint8_t Alpha;
+    struct HeaderBMP{
+        std::uint8_t name[2];
+        std::uint32_t size;
+        std::uint32_t garbage;
+        std::uint32_t offset;
     };
-    bool validFormat(std::ifstream &, const std::string &, Header &) const;
+    struct HeaderDIP{
+        std::uint32_t headersize;
+        std::uint32_t Width;
+        std::uint32_t Height;
+        std::uint16_t plane;
+        std::uint16_t bitsPerPixel;
+        std::uint32_t compression;
+        std::uint32_t garbage[26];
+    };
+    bool validFormat(std::ifstream &, const std::string &, HeaderDIP &) const;
 
 };

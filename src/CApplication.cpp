@@ -9,6 +9,7 @@ void CApplication::Run(void){
     std::cout << "\x1B[2J\x1B[H"; //Clear terminal
     CImageCheck check;
     std::string type = check.checkImage(path);
+    //TODO add while loop
     if(type == "file"){
         if(m_Formats.find(check.getFileExtension(path)) == m_Formats.end()) throw std::invalid_argument(path + " has invalid extension");
         CImage image = m_Formats[check.getFileExtension(path)]->loadFile(path); //Polymorphism

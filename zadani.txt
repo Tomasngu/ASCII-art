@@ -32,3 +32,5 @@ Polymorfismus bude uplatněn ve třídách CFormatTGA, CFormatBMP a CFormatJPEG,
 Polymorfismus bude uplatněn díky virtuální metodě loadData(), která bude volaná v závisloti na užitém formátu. Takové užití polymorfismu dovolí jednoduché přidání nových formátů.
 Dále bude polymorfismus uplatněn v editačních třídách CFilterbright,CFilterRotate,CFilterMirror, atd. Budou mít společného předka CFilter, což bude též abstraktní třída. 
 Polymorfismus bude uplatněn díky virtuální metodě edit(). Polymorfismus nám usnadní přidávat nové možnosti úprav a také nám zesnadní skládání jednotlivých editací za sebou díky společné abstraktní třídě.
+
+% vim: filetype=markdown

@@ -1,10 +1,13 @@
 #include "CFormatBMP.h"
 #include "CFormatTGA.h"
 #include "CFormat.h"
+#include "CApplication.h"
 
 int main(void){
-    CFormatTGA f;
-    CImage image =  f.loadFile("sycinecek.tga");
-    image.Render();
-    return 0;
+    try{
+        CApplication app;
+        app.Run();
+    }catch ( const std::invalid_argument & e ){
+        std::cout << e.what() << std::endl;
+    }
 }

@@ -13,7 +13,7 @@ CImage CFormatTGA::loadFile(const std::string & fileName ) const{
     
     bool upsideDown = ! (bool) (header.Alpha & (1 << 5) );
     //TODO compressed image
-    std::cout << header.bitsPerPixel/8 << std::endl;
+    //std::cout << header.bitsPerPixel/8 << std::endl;
     // int cnt = 0;
     //std::cout << image.m_Pixels.size() << std::endl;
     // std::cout << image.m_Pixels[0].size() << std::endl;

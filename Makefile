@@ -1,13 +1,13 @@
 CXX=g++
 CXXFLAGS = -g -std=c++17 -Wall -pedantic -fsanitize=address
 
-all: psfit
+all: app
 	-rm -f src/*.o
-run: psfit
+run: app
 	-rm -f src/*.o
-	./psfit
+	./app
 
-psfit: src/main.o src/CFormatTGA.o src/CImage.o src/CFormat.o src/CFormatBMP.o
+app: src/main.o src/CFormatTGA.o src/CImage.o src/CFormat.o src/CFormatBMP.o src/CApplication.o src/CImageCheck.o
 	$(CXX) $(CXXFLAGS) -o $@ $^ 
 
 %.o: %.cpp
@@ -15,7 +15,7 @@ psfit: src/main.o src/CFormatTGA.o src/CImage.o src/CFormat.o src/CFormatBMP.o
 
 clean:
 	-rm -f src/*.o
-	-rm psfit
+	-rm app
 	
 deps:
 	$(CXX) -MM src/*.cpp > Makefile.d

@@ -1,0 +1,34 @@
+# ASCII-art
+
+## Zadání:
+Váš program:
+
+z jednoho až n obrázků běžného formátu (BMP/SVG/RAW/TGA, ...) načte data a ty validně zobrazí v ASCII (odstíny šedi)
+ze souboru načte definovaný ASCII přechod
+umožňuje alespoň tři jednoduché operace (zesvětlení/ztmavení obrázku, vymazání, konvoluce, negativ, ...)
+umožnuje "spuštění" animace v případě více načtených obrázků a triviální editaci animace na útovní framů (např. mazání framů, seřazení za sebou, ...)
+Program bude umět pracovat s minimálně jedním obrázkovým formátem.
+
+Program bude mít jednoduché možnosti přehrávání animace (zastavit, spustit, zobrazit konkrétní frame, ...).
+
+## Upřesnění
+Načítání binárních souborů formátu TGA, BMP a JPEG. Uživatel si bude moct nastavit velikost vzniklého obrázku ve znacích, aby se mu vešel do terminálu. 
+Bude předpřipraveny 2 různé ASCII přechody, které si uživatel bude moci vybrat a bude též možnost načíst ze souboru nebo z klávesnice vlastní.
+Program bude umožňovat jednoduché editace ve formě oříznutí, zesvětelní a ztmavení, negativ, rotace a zrcadlení.
+Uživatel bude moci z více souborů udělat jednoduchou animaci a bude umožněno přidávat nové framy, mazat je, měnit jejich pořadí a měnit rychlost pouštění animace.
+
+Navíc bude program umět krom obrázků převést text na jednoduchý umělečký text
+Příklad:
+             _____  _____ _____ _____            _____ _______            
+      /\    / ____|/ ____|_   _|_   _|     /\   |  __ \__   __|            
+     /  \  | (___ | |      | |   | |      /  \  | |__) | | |    
+    / /\ \  \___ \| |      | |   | |     / /\ \ |  _  /  | |    
+   / ____ \ ____) | |____ _| |_ _| |_   / ____ \| | \ \  | |    
+  /_/    \_\_____/ \_____|_____|_____| /_/    \_\_|  \_\ |_|       
+
+
+# Polymorfismus:
+Polymorfismus bude uplatněn ve třídách CFormatTGA, CFormatBMP a CFormatJPEG, které mají společného předka CFormat, což je abstraktní třída. 
+Polymorfismus bude uplatněn díky virtuální metodě loadData(), která bude volaná v závisloti na užitém formátu. Takové užití polymorfismu dovolí jednoduché přidání nových formátů.
+Dále bude polymorfismus uplatněn v editačních třídách CFilterbright,CFilterRotate,CFilterMirror, atd. Budou mít společného předka CFilter, což bude též abstraktní třída. 
+Polymorfismus bude uplatněn díky virtuální metodě edit(). Polymorfismus nám usnadní přidávat nové možnosti úprav a také nám zesnadní skládání jednotlivých editací za sebou díky společné abstraktní třídě.

@@ -3,5 +3,6 @@
 #include "CFilter.h"
 
 class CFilterBright : public CFilter{
-    virtual void loadFile() override;
+public:
+    virtual void edit(CImage &) const override;
 };

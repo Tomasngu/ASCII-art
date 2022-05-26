@@ -3,5 +3,6 @@
 #include "CImage.h"
 
 class CFilter{
-    virtual void edit(CImage &) const;    
+public:
+    virtual void edit(CImage &) const = 0;    
 };

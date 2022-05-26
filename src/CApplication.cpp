@@ -1,19 +1,19 @@
 #include "CApplication.h"
 
-
 void CApplication::Run(void){
+    std::cout << "\x1B[2J\x1B[H"; //Clear terminal
     printMenu();
     std::cout << "Enter path to file or directory: ";
     std::string path;
     std::cin >> path;
-    std::cout << "\x1B[2J\x1B[H"; //Clear terminal
-    CImageCheck check;
-    std::string type = check.checkImage(path);
-    //TODO add while loop
+    CImageCheck check(path);
+    std::string type = check.checkImage();
     if(type == "file"){
-        if(m_Formats.find(check.getFileExtension(path)) == m_Formats.end()) throw std::invalid_argument(path + " has invalid extension");
-        CImage image = m_Formats[check.getFileExtension(path)]->loadFile(path); //Polymorphism
-        image.Render();
+        CImage image = check.getImage();
+        image.rescale();
+        image.render();
+        CImageHandler handler(image);
+        handler.start();
     }
     else{
         //TODO
@@ -31,6 +31,3 @@ void CApplication::printMenu(void){
     std::cout << std::endl;
     std::cout << std::endl;                                                             
 }
-
-std::map<std::string, std::shared_ptr<CFormat>> CApplication::m_Formats = {{"bmp", std::make_shared<CFormatBMP>(CFormatBMP())},
-                                                                       {"tga", std::make_shared<CFormatTGA>(CFormatTGA())} };

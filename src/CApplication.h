@@ -6,6 +6,8 @@
 #include "CFormatBMP.h"
 #include "CFormatTGA.h"
 #include "CImageCheck.h"
+#include "CFilterRotate.h"
+#include "CImageHandler.h"
 
 
 class CApplication{

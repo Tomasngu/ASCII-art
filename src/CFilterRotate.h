@@ -4,5 +4,8 @@
 
 class CFilterRotate : public CFilter{
 public:
-    virtual void edit(CImage &) const override;
+    CFilterRotate() = default;
+    virtual ~CFilterRotate() = default;
+protected:
+    CImage getTransposed(CImage &) const;
 };

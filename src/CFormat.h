@@ -17,5 +17,8 @@ protected:
         std::uint8_t R, G, B;
     };
     static std::uint8_t getGrayscale(Pixel pix);
+    static constexpr double red = 0.299;
+    static constexpr double green = 0.587;
+    static constexpr double blue = 0.114;
 };
 

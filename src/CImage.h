@@ -19,5 +19,5 @@ public:
 private:
     static std::map<int, char> numtoAscii;
     static std::map<int, char> numtoAscii2;
-    static std::string ANSIClear;
+    static constexpr std::string_view ANSIClear = "\x1B[2J\x1B[H";
 };

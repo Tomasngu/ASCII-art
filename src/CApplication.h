@@ -3,10 +3,7 @@
 #include<iostream>
 #include<map>
 #include<memory>
-#include "CFormatBMP.h"
-#include "CFormatTGA.h"
 #include "CImageCheck.h"
-#include "CFilterRotate.h"
 #include "CImageHandler.h"
 
 

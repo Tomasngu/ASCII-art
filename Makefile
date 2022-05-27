@@ -7,7 +7,7 @@ run: app
 	-rm -f src/*.o
 	./app
 
-app: src/main.o src/CFormatTGA.o src/CImage.o src/CFormat.o src/CFormatBMP.o src/CApplication.o src/CImageCheck.o src/CFilterRotate.o src/CImageHandler.o
+app: src/main.o src/CFormatTGA.o src/CImage.o src/CFormat.o src/CFormatBMP.o src/CApplication.o src/CImageCheck.o src/CFilterRotate.o src/CFIlterRotateL.o  src/CFIlterRotateR.o src/CImageHandler.o
 	$(CXX) $(CXXFLAGS) -o $@ $^ 
 
 %.o: %.cpp

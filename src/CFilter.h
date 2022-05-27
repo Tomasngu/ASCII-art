@@ -5,4 +5,5 @@
 class CFilter{
 public:
     virtual void edit(CImage &) const = 0;    
+    virtual ~CFilter() = default;
 };

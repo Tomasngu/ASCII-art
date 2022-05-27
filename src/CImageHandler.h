@@ -3,7 +3,8 @@
 #include<iostream>
 #include<string>
 #include"CImage.h"
-#include"CFilterRotate.h"
+#include"CFIlterRotateL.h"
+#include"CFIlterRotateR.h"
 
 class CImageHandler{
 public:

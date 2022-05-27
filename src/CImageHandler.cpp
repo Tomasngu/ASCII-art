@@ -20,8 +20,13 @@ void CImageHandler::start(void){
             showHelp();
         }
         else if(command == "rotateR"){
-            CFilterRotate rot;
-            rot.edit(m_Image);
+            static CFilterRotateR rotR;
+            rotR.edit(m_Image);
+            m_Image.render();
+        }
+        else if(command == "rotateL"){
+            static CFilterRotateL rotL;
+            rotL.edit(m_Image);
             m_Image.render();
         }
     }

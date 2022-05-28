@@ -1,8 +1,7 @@
 #pragma once
+#include "CFilterRotate.h"
 
-#include "CFilter.h"
-
-class CFilterInverse : public CFilter{
+class CFilterRotateR: public CFilterRotate{
 public:
     virtual void edit(CImage &) const override;
 };

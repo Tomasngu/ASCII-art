@@ -14,7 +14,7 @@ void CImage::render(void) const{
     std::cout << ANSIClear;
     for(int h = 0; h < m_Height; h++){
         for(int w = 0; w < m_Width; w++){
-            std::cout << numtoAscii[m_Pixels[h][w]/28];
+            std::cout << numtoAscii[m_Pixels[h][w]/30];
         }
         std::cout << std::endl;
     }
@@ -32,6 +32,16 @@ void CImage::rescale(void){
     m_Height /= 3;
     m_Width /= 2;
     // m_Pixels.resize(m_Height, std::vector<std::uint8_t>(m_Width));
+}
+
+void CImage::printNum(void) const{
+    std::cout << ANSIClear;
+    for(int h = 0; h < m_Height; h++){
+        for(int w = 0; w < m_Width; w++){
+            std::cout << (int) m_Pixels[h][w] << " ";
+        }
+        std::cout << std::endl;
+    }
 }
 
 std::map<int, char>  CImage::numtoAscii = {{0,' '}, {1, '.' }, {2, '*' }, {3, ':' },

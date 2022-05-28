@@ -3,8 +3,13 @@
 #include<iostream>
 #include<string>
 #include"CImage.h"
-#include"CFIlterRotateL.h"
-#include"CFIlterRotateR.h"
+#include"CFilterRotateL.h"
+#include"CFilterRotateR.h"
+#include"CFilterFlip.h"
+#include"CFilterMirror.h"
+#include"CFilterDark.h"
+#include"CFilterBright.h"
+#include"CFilterInverse.h"
 
 class CImageHandler{
 public:

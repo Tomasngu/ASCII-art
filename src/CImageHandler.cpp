@@ -29,6 +29,32 @@ void CImageHandler::start(void){
             rotL.edit(m_Image);
             m_Image.render();
         }
+        else if(command == "mirror"){
+            static CFilterMirror mir;
+            mir.edit(m_Image);
+            m_Image.render();
+        }
+        else if(command == "flip"){
+            static CFilterFlip flip;
+            flip.edit(m_Image);
+            m_Image.render();
+        }
+        else if(command == "bright"){
+            static CFilterBright bright;
+            bright.edit(m_Image);
+            m_Image.render();
+        }
+        else if(command == "dark"){
+            static CFilterDark dark;
+            dark.edit(m_Image);
+            m_Image.render();
+        }
+        else if(command == "invert"){
+            static CFilterInverse inv;
+            inv.edit(m_Image);
+            m_Image.render();
+        }
+
     }
 }
 
@@ -38,14 +64,15 @@ void CImageHandler::showHelp(void){
         rotateR -   rotates image 90° to the right.
         rotateL -   rotates image 90° to the left.
         mirror  -   mirrors the image.
+        flip    -   flips the image upside down.
         invert  -   inverts grayscale colors.
-        dark    -   makes image darker.
         bright  -   makes image brighter
+        dark    -   makes image darker.
         resize  -   changes size of image.
         
-        new     -   sets new image  
-        help    -   prints this help menu 
-        exit    -   exits the program )"
+        new     -   sets new image.  
+        help    -   prints this help menu. 
+        exit    -   exits the program. )"
     << std::endl;
 
 }

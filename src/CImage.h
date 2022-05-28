@@ -12,6 +12,7 @@ public:
     void printmySize(void);
     void render(void) const;
     void rescale(void);
+    void printNum(void) const;
     std::vector<std::vector<std::uint8_t>> m_Pixels;
     std::uint16_t m_Height;
     std::uint16_t m_Width;

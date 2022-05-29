@@ -11,3 +11,6 @@ void CFilterRotateR::edit(CImage & origimage) const {
     CFilterRotate::ScaledRotation(image);
     origimage = image;
 }
+std::unique_ptr<CFilter> CFilterRotateR::clone() const{
+    return std::make_unique<CFilterRotateR> (*this);
+}

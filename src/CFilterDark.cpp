@@ -12,3 +12,6 @@ void CFilterDark::edit(CImage & image) const {
         }
     }
 }
+std::unique_ptr<CFilter> CFilterDark::clone() const{
+    return std::make_unique<CFilterDark> (*this);
+}

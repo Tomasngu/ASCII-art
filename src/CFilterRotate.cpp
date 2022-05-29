@@ -12,3 +12,14 @@ CImage CFilterRotate::getTransposed(CImage & origimage)const{
     }
     return image;
 }
+void CFilterRotate::ScaledRotation(CImage & image) const{
+    if(!image.isSideWays){
+        CFilterResize res(CFilterRotate::rotationScale, 1/CFilterRotate::rotationScale);
+        res.edit(image);    
+        image.isSideWays = true;
+    }else{
+        CFilterResize res(CFilterRotate::rotationScale, 1/CFilterRotate::rotationScale);
+        res.edit(image);   
+        image.isSideWays = false; 
+    }
+}

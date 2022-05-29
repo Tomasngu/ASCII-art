@@ -7,3 +7,6 @@ void CFilterMirror::edit(CImage & image) const {
         }
     }
 }
+std::unique_ptr<CFilter> CFilterMirror::clone() const{
+    return std::make_unique<CFilterMirror> (*this);
+}

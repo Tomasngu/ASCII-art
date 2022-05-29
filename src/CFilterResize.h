@@ -8,6 +8,7 @@ public:
     CFilterResize(double scale);
     CFilterResize(double scaleH, double scaleW);
     virtual void edit(CImage &) const override;
+    virtual std::unique_ptr<CFilter> clone() const override;
 private:
     std::uint8_t calculatePixel(const CImage &, double, double) const;
     double m_ScaleH;

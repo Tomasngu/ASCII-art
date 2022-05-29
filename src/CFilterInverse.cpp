@@ -7,3 +7,6 @@ void CFilterInverse::edit(CImage & image) const {
         }
     }
 }
+std::unique_ptr<CFilter> CFilterInverse::clone() const{
+    return std::make_unique<CFilterInverse> (*this);
+}

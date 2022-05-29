@@ -7,3 +7,6 @@ void CFilterFlip::edit(CImage & image) const {
         }
     }
 }
+std::unique_ptr<CFilter> CFilterFlip::clone() const{
+    return std::make_unique<CFilterFlip> (*this);
+}

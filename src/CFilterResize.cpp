@@ -53,3 +53,7 @@ std::uint8_t CFilterResize::calculatePixel(const CImage & origimage, double orig
         return q;
     }
 }
+
+std::unique_ptr<CFilter> CFilterResize::clone() const{
+    return std::make_unique<CFilterResize> (*this);
+}

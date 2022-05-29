@@ -12,3 +12,7 @@ void CFilterBright::edit(CImage & image) const {
         }
     }
 }
+
+std::unique_ptr<CFilter> CFilterBright::clone() const{
+    return std::make_unique<CFilterBright> (*this);
+}

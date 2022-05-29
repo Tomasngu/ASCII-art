@@ -8,6 +8,6 @@ int main(void){
         CApplication app;
         app.Run();
     }catch ( const std::invalid_argument & e ){
-        std::cout << e.what() << std::endl;
+        std::cout << '\n' << e.what() << std::endl;
     }
 }

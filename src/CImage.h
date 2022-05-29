@@ -7,6 +7,7 @@
 #include<fstream>
 #include<map>
 #include<memory>
+#include<climits>
 
 class CImage{
 public:
@@ -21,6 +22,7 @@ public:
     std::vector<std::vector<std::uint8_t>> m_Pixels;
     std::uint16_t m_Height;
     std::uint16_t m_Width;
+    bool isSideWays = false;
 
 private:
     static std::map<int, char> numtoAscii;

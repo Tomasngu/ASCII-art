@@ -3,23 +3,33 @@
 void CApplication::Run(void){
     std::cout << "\x1B[2J\x1B[H"; //Clear terminal
     printMenu();
-    std::cout << "Enter path to file or directory: ";
-    std::string path;
-    std::cin >> path;
-    CImageCheck check(path);
-    std::string type = check.checkImage();
-    if(type == "file"){
-        CImage image = check.getImage();
-        CFilterResize rescale(1, 1.5);
-        rescale.edit(image);
-        image.render();
-        CImageHandler handler(image);
-        handler.start();
+    while(true){
+        try{
+            std::cout << "Enter path to file or directory: ";
+            std::string path;
+            std::cin >> path;
+            if(std::cin.eof()) throw std::invalid_argument("CTRL + D."); 
+            CImageCheck check(path);
+            std::string type = check.checkImage();
+            if(type == "file"){
+                CImage image = check.getImage();
+                CFilterResize rescale(1, 1.5);
+                rescale.edit(image);
+                image.render();
+                CImageHandler handler(image);
+                handler.start();
+            }
+            else{
+                //TODO
+            }
+        }catch ( const std::invalid_argument & e ){
+            using namespace std;
+            if( e . what () ==  ("CTRL + D."sv) || e . what () ==  ("Exited."sv) ){
+                throw std::invalid_argument("Exited.");
+            }
+            std::cout << e.what() << std::endl;
+        }
     }
-    else{
-        //TODO
-    }
-
 }
 
 void CApplication::printMenu(void){

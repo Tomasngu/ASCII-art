@@ -77,8 +77,6 @@ void CImage::loadTransitionFile(void){
 void CImage::loadTransitionType(void){
     std::cout << "Type ASCII characters of your preffered transition." << std::endl;
     std::cout << "Transition should start with least dense characters first to the most dense at the end." << std::endl;
-    std::cin.clear();
-    std::cin.ignore(10000,'\n');
     std::string line;
     std::getline(std::cin, line);
     if(std::cin.eof()) throw std::invalid_argument("CTRL + D."); 

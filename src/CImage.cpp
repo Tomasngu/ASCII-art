@@ -10,11 +10,16 @@ void CImage::printmySize(void){
     std::cout << "Height, Width = " << m_Height << " " << m_Width << std::endl; 
 }
 
-void CImage::render(void) const{
+void CImage::render(void) {
     std::cout << ANSIClear;
     for(int h = 0; h < m_Height; h++){
         for(int w = 0; w < m_Width; w++){
-            std::cout << numtoAscii[m_Pixels[h][w]/30];
+            if(!m_CustomSet) {
+                std::cout << numtoAscii[m_Pixels[h][w]/30];
+            }
+            else{
+                std::cout << m_CustomTransition[m_Pixels[h][w]/(255/m_CustomTransition.size())];
+            }
         }
         std::cout << std::endl;
     }
@@ -31,7 +36,6 @@ void CImage::rescale(void){
     }
     m_Height /= 3;
     m_Width /= 2;
-    // m_Pixels.resize(m_Height, std::vector<std::uint8_t>(m_Width));
 }
 
 void CImage::printNum(void) const{
@@ -43,6 +47,50 @@ void CImage::printNum(void) const{
         std::cout << std::endl;
     }
 }
+void CImage::loadTransitionFile(void){
+    std::cout << "Enter path to file with your custom transition." << std::endl;
+    std::cout << "Transition should start with least dense characters first to the most dense at the end. File should have only one line." << std::endl;
+    std::string path;
+    std::cin >> path;
+    const std::filesystem::path p = path;
+    if(!std::filesystem::exists(p)) throw std::invalid_argument("Path to " + path + " does not exist or " + path + " does not exist.");
+    if(!std::filesystem::is_regular_file(p)) throw std::invalid_argument(path + " is not a file.");
+    std::ifstream ifs(path);
+    if(!ifs.good()) throw std::invalid_argument("Failed to read file " + path);
+    std::string line;
+    int count = 0;
+    int chars = 0;
+    while(std::getline(ifs, line)){
+        if(line.empty()) continue;
+        for(char c: line){
+            m_CustomTransition[chars++] = c;
+        }
+        count++;
+    }
+    if(count > 1)  throw std::invalid_argument(path + " has multiple lines.");
+    if(!ifs.eof()) throw std::invalid_argument("Reading failed.");
+    if(chars == 0) throw std::invalid_argument("No characters given."); 
+    m_CustomSet = true;
+    return;
+}
+
+void CImage::loadTransitionType(void){
+    std::cout << "Type ASCII characters of your preffered transition." << std::endl;
+    std::cout << "Transition should start with least dense characters first to the most dense at the end." << std::endl;
+    std::cin.clear();
+    std::cin.ignore(10000,'\n');
+    std::string line;
+    std::getline(std::cin, line);
+    if(std::cin.eof()) throw std::invalid_argument("CTRL + D."); 
+    int chars = 0;
+    for(char c: line){
+        m_CustomTransition[chars++] = c;
+    }
+    if(chars == 0) throw std::invalid_argument("No characters given."); 
+    m_CustomSet = true;
+    return;
+}
+
 
 std::map<int, char>  CImage::numtoAscii = {{0,' '}, {1, '.' }, {2, '*' }, {3, ':' },
     {4, 'o' }, {5, '&' },{6, '8' }, {7, '#' },{8, '@' } };

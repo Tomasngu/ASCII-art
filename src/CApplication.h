@@ -5,6 +5,7 @@
 #include<memory>
 #include "CImageCheck.h"
 #include "CImageHandler.h"
+#include "CFilterResize.h"
 
 
 class CApplication{

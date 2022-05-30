@@ -18,7 +18,8 @@ private:
         std::uint16_t plane;
         std::uint16_t bitsPerPixel;
         std::uint32_t compression;
-        std::uint32_t garbage[26];
+        std::uint32_t pixelSize;
+        std::uint32_t garbage[25]; //100 bits
     };
     bool validFormat(std::ifstream &, const std::string &, HeaderDIP &) const;
 

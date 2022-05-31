@@ -16,7 +16,18 @@ const std::string CImageCheck::checkImage(void) const{
 CImage CImageCheck::getImage(void) const{
     if(m_Formats.find(getFileExtension(m_Path)) == m_Formats.end())  throw std::invalid_argument(m_Path + " has invalid extension");
     CImage image = m_Formats[getFileExtension(m_Path)]->loadFile(m_Path); //Polymorphism
+    makePretty(image);
     return image;
+}
+void CImageCheck::makePretty(CImage & image) {
+    CFilterResize rescale(1, ASCIIratio);
+    rescale.edit(image);
+    int max = (image.m_Height > image.m_Width) ? image.m_Height : image.m_Width;
+    if(optimalSize > max) return;
+    double ratio = (double) optimalSize/max;
+    CFilterResize resize(ratio);
+    resize.edit(image);
+    
 }
 
 std::vector<std::string> CImageCheck::getImagesInDir(void) const{

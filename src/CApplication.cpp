@@ -13,8 +13,6 @@ void CApplication::Run(void){
             std::string type = check.checkImage();
             if(type == "file"){
                 CImage image = check.getImage();
-                CFilterResize rescale(1, 1.5);
-                rescale.edit(image);
                 image.render();
                 CImageHandler handler(image);
                 handler.start();

@@ -73,8 +73,6 @@ void CImageHandler::newImage(void){
             std::string type = check.checkImage();
             if(type != "file") throw std::invalid_argument(path + " is not a file.");
             CImage image = check.getImage();
-            CFilterResize rescale(1, 1.5);
-            rescale.edit(image);
             m_Image = image;
             ImageSet = true;
         }catch ( const std::invalid_argument & e ){
@@ -89,8 +87,8 @@ void CImageHandler::newImage(void){
 void CImageHandler::loadTransition(void){
     bool TransitionSet = false;
     while(!TransitionSet){
-        std::cout << "Choose \"type\" if you want to type the transition yourself" << std::endl;
-        std::cout << "Choose \"file\" if you want to load the transition from file" << std::endl;
+        std::cout << "Choose \"type\" if you want to type the transition yourself." << std::endl;
+        std::cout << "Choose \"file\" if you want to load the transition from file." << std::endl;
         std::string command;
         std::cin >> command;
         if(std::cin.eof()) {
@@ -102,7 +100,6 @@ void CImageHandler::loadTransition(void){
         }
         else{
             std:: cout << "Command " + command + " not found." << std::endl; 
-            std:: cout << "Choose \"type\" or \"file\"."<< std::endl; 
         }
     }
 }

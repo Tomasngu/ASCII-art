@@ -2,7 +2,7 @@ CXX=g++
 CXXFLAGS = -Wall -pedantic -std=c++17 -fsanitize=address -g 
 
 all: app
-	-rm -f src/*.o
+
 run: app
 	-rm -f src/*.o
 	./app

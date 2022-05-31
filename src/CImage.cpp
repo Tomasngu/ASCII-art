@@ -52,6 +52,7 @@ void CImage::loadTransitionFile(void){
     std::cout << "Transition should start with least dense characters first to the most dense at the end. File should have only one line." << std::endl;
     std::string path;
     std::cin >> path;
+    if(std::cin.eof()) throw std::invalid_argument("CTRL + D."); 
     const std::filesystem::path p = path;
     if(!std::filesystem::exists(p)) throw std::invalid_argument("Path to " + path + " does not exist or " + path + " does not exist.");
     if(!std::filesystem::is_regular_file(p)) throw std::invalid_argument(path + " is not a file.");

@@ -5,15 +5,19 @@
 #include "CImage.h"
 #include "CFormatBMP.h"
 #include "CFormatTGA.h"
+#include "CFilterResize.h"
 
 class CImageCheck{
 public:
     CImageCheck(const std::string &);
     const std::string checkImage(void) const;
     CImage getImage(void) const;
-    std::vector<std::string> getImagesInDir(void) const ;
-    static const std::string getFileExtension(const std::string &);
+    std::vector<std::string> getImagesInDir(void) const;
 private:
     const std::string & m_Path;
+    static constexpr int optimalSize = 160;
+    static constexpr double ASCIIratio = 1.5;
     static std::map<std::string, std::shared_ptr<CFormat>> m_Formats;
+    static const std::string getFileExtension(const std::string &);  
+    static void makePretty(CImage &);
 };

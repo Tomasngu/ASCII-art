@@ -13,6 +13,7 @@ CImage CFormatBMP::loadFile(const std::string & fileName ) const{
         for(std::uint32_t w = 0; w < headerDip.Width; ++w){
             CFormat::Pixel pix;
             ifs.read(reinterpret_cast<char *>(&pix), sizeof(pix));
+            if(!ifs.good()) throw std::invalid_argument(fileName + " does not have valid size");
             if(upsideDown){
                 image.m_Pixels[headerDip.Height - h -1][w] = CFormat::getGrayscale(pix);
             }
@@ -25,7 +26,10 @@ CImage CFormatBMP::loadFile(const std::string & fileName ) const{
             std::uint8_t rest;
             ifs.read(reinterpret_cast<char *>(&rest), sizeof(rest));
         }
-    }    
+    }
+    char error;
+    ifs.read(reinterpret_cast<char *>(&error), sizeof(error));
+    if(!ifs.eof()) throw std::invalid_argument(fileName + " does not have valid size");  
     return image;
 }
 
@@ -44,14 +48,13 @@ bool CFormatBMP::validFormat(std::ifstream & ifs, const std::string & fileName, 
     ifs.read(reinterpret_cast<char *>(&headerDip.compression), sizeof(headerDip.compression));
     ifs.read(reinterpret_cast<char *>(&headerDip.pixelSize), sizeof(headerDip.pixelSize));
     std::uint32_t sum = sizeof(headerDip.headersize) + sizeof(headerDip.Width) + sizeof(headerDip.Height) + sizeof(headerDip.plane) + sizeof(headerDip.bitsPerPixel) + sizeof(headerDip.compression) + sizeof(headerDip.pixelSize);
-    ifs.read(reinterpret_cast<char *>(&headerDip.garbage), (headerDip.headersize-sum)/sizeof(std::uint32_t) );
-
+    ifs.read(reinterpret_cast<char *>(&headerDip.garbage), (headerDip.headersize-sum));
 
     if(!ifs.good()) throw std::invalid_argument("Reading failed after header " + fileName);
     if(headerDip.bitsPerPixel != 24) throw std::invalid_argument("Each pixel of + "  + fileName + " should have 24 bits.");
     if(headerDip.compression != 0) throw std::invalid_argument(fileName + " should not be compressed.");
     // if(headerDip.headersize != 124) throw std::invalid_argument(fileName + " should have 124 header size");
     std::uint32_t rowSize = ((headerDip.Width *headerDip.bitsPerPixel+31)/32)*4;
-    if(rowSize*headerDip.Height + headerDip.headersize + 14 != header.size) throw(fileName + " does not have valid size");
+    if(rowSize*headerDip.Height + headerDip.headersize + 14 != header.size) throw std::invalid_argument(fileName + " does not have valid size");
     return true;
 }

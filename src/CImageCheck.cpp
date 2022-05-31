@@ -27,7 +27,6 @@ void CImageCheck::makePretty(CImage & image) {
     double ratio = (double) optimalSize/max;
     CFilterResize resize(ratio);
     resize.edit(image);
-    
 }
 
 std::vector<std::string> CImageCheck::getImagesInDir(void) const{

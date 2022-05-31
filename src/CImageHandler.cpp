@@ -174,6 +174,10 @@ const std::string CImageHandler::loadName(void){
             if(name.empty()) throw std::invalid_argument("Empty name.");
             if(std::cin.eof()) {
                 throw std::invalid_argument("CTRL + D.");
+            }
+            if(Commands.find(name) != Commands.end() || m_CustomCommands.find(name) != m_CustomCommands.end() 
+                || name ==  "exit" ||  name ==  "custom" ||  name ==  "new" ||   name ==  "transition" || name ==  "help"){
+                throw std::invalid_argument("Command already exists.");
             }   
             break;
         }catch ( const std::invalid_argument & e ){

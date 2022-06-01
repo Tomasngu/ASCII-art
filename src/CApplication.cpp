@@ -17,8 +17,11 @@ void CApplication::Run(void){
                 CImageHandler handler(image);
                 handler.start();
             }
-            else{
-                //TODO
+            else if (type == "directory") {
+                CVideo video = check.getImagesInDir();
+                CVideoHandler handler(video);
+                handler.start();
+                
             }
         }catch ( const std::invalid_argument & e ){
             using namespace std;

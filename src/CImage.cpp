@@ -10,7 +10,7 @@ void CImage::printmySize(void){
     std::cout << "Height, Width = " << m_Height << " " << m_Width << std::endl; 
 }
 
-void CImage::render(void) {
+void CImage::render(void){
     std::cout << ANSIClear;
     for(int h = 0; h < m_Height; h++){
         for(int w = 0; w < m_Width; w++){
@@ -23,7 +23,6 @@ void CImage::render(void) {
         }
         std::cout << std::endl;
     }
-    // std::cout << ANSIClear;
 }
 void CImage::rescale(void){
     for(int h = 0 ; h < m_Height/3; ++h){

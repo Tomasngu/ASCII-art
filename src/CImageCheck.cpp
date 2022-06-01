@@ -29,13 +29,22 @@ void CImageCheck::makePretty(CImage & image) {
     resize.edit(image);
 }
 
-std::vector<std::string> CImageCheck::getImagesInDir(void) const{
+CVideo CImageCheck::getImagesInDir(void) const{
     const std::filesystem::path p = m_Path;
-    std::vector<std::string> files;
+    CVideo video;
     for(auto const & entry : std::filesystem::directory_iterator(p)){
-        if(entry.is_regular_file()) files.push_back(entry.path().string());
+        if(!entry.is_regular_file()) throw std::invalid_argument(entry.path().string() + " is not a file.");
+        CImage image = getOneImageDir(entry.path().string());
+        video.addFrame(image);
     }
-    return files;
+    return video;
+}
+
+CImage CImageCheck::getOneImageDir(const std::string & path){
+    if(m_Formats.find(getFileExtension(path)) == m_Formats.end())  throw std::invalid_argument(path + " has invalid extension.");
+    CImage image = m_Formats[getFileExtension(path)]->loadFile(path); //Polymorphism
+    makePretty(image);
+    return image;
 }
 
 const std::string CImageCheck::getFileExtension(const std::string & m_Path){

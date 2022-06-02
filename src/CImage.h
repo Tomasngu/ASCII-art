@@ -9,6 +9,7 @@
 #include<memory>
 #include<climits>
 #include<cassert>
+#include<set>
 #include"ArgLoader.h"
 
 struct CImage{
@@ -20,7 +21,7 @@ public:
     void printNum(void) const;
     void loadTransitionFile(void);
     void loadTransitionType(void);
-    std::vector<std::vector<std::uint8_t>> m_Pixels;
+    std::vector<std::vector<std::int16_t>> m_Pixels;
     std::uint16_t m_Height;
     std::uint16_t m_Width;
     bool isSideWays = false;
@@ -29,6 +30,8 @@ private:
     static const std::vector<char> numtoAscii;
     static std::map<int, char> numtoAscii2;
     std::vector<char> m_CustomTransition;
+    void printASCII(int, int) const;
     bool m_CustomSet = false;
-    static constexpr std::string_view ANSIClear = "\x1B[2J\x1B[H";
+    static constexpr int RGBsize = 255;
+    // static constexpr std::string_view ANSIClear = "\x1B[2J\x1B[H";
 };

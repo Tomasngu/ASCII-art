@@ -120,7 +120,7 @@ void CVideoHandler::switchFrames(void){
             std::vector<int> nums = ArgLoader::getNums(2);
             m_Video.switchframes(nums[0], nums[1]);
             std::system("clear");
-            std::cout << "Frames at index " << nums[0] <<" and " << nums[1] << " removed." << std::endl;
+            std::cout << "Frames at index " << nums[0] <<" and " << nums[1] << " switched." << std::endl;
             switched = true;
         }catch ( const std::invalid_argument & e ){
             using namespace std;

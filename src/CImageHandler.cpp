@@ -35,6 +35,7 @@ void CImageHandler::start(void){
             else if(command == "custom"){
                 createCustom();
                 m_Image.render();
+                std::cout << "Custom filter made successfully. Check out help." << std::endl;
             }
             else if(Commands.find(command) != Commands.end()){
                 Commands[command]->edit(m_Image); //Polymorphism

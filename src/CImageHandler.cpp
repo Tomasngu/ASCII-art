@@ -176,7 +176,7 @@ void CImageHandler::printCustoms(void) const{
 
 void CImageHandler::showHelp(void) const{
     std::cout << 
-    R"(List of avalaible commands: 
+    R"(List of available commands: 
         rotateR     -   rotates image 90° to the right.
         rotateL     -   rotates image 90° to the left.
         mirror      -   mirrors the image.

@@ -16,5 +16,4 @@ public:
     void Run(void) const;
 private:
     void printMenu(void) const;
-    static constexpr std::string_view ANSIClear = "\x1B[2J\x1B[H";
 };

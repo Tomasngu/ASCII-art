@@ -37,7 +37,7 @@ void CVideo::play(void) {
         if((x = getch()) == EOF) throw std::invalid_argument("GRRR");; /* consume the character */
         if(x == END) return;
         if(x != SPACEBAR) continue;
-        while (!kbhit() && getch() != 32) {
+        while (!kbhit() && getch() != SPACEBAR) {
             sleep(0.1);
         }
     }

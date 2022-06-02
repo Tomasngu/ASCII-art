@@ -11,8 +11,11 @@ void CVideoHandler::start(void) {
         try{
             std::cout << std::endl << "Command: "; 
             std::string command = ArgLoader::getString();
-            if(command == "help"){
-                m_Video.getFrame(lastShownframe).render();
+            if(command == "back"){
+                return;
+            }
+            else if(command == "help"){
+                if(m_Video.getSize() > 0) m_Video.getFrame(lastShownframe).render();
                 showHelp();    
             }
             else if(command == "add"){
@@ -22,7 +25,6 @@ void CVideoHandler::start(void) {
             else if(command == "remove"){
                 if(m_Video.getSize() == 0) throw std::invalid_argument("No frames loaded.");
                 removeFrame();
-                if(m_Video.getSize() > 0) m_Video.getFrame(lastShownframe).render();
             }
             else if(command == "play"){
                 if(m_Video.getSize() == 0) throw std::invalid_argument("No images loaded.");
@@ -31,7 +33,6 @@ void CVideoHandler::start(void) {
             else if(command == "switch"){
                 if(m_Video.getSize() <= 1) throw std::invalid_argument("Not enough images loaded.");
                 switchFrames();
-                m_Video.getFrame(lastShownframe).render();
             }
             else if(command == "show"){
                 if(m_Video.getSize() == 0) throw std::invalid_argument("No images loaded.");
@@ -97,6 +98,9 @@ void CVideoHandler::removeFrame(void){
             printAllowedIndexes();
             int index = ArgLoader::getNums(1)[0];
             m_Video.removeFrame(index);
+            lastShownframe = 0;
+            std::system("clear");
+            std::cout << "Frame at index " << index << " removed." << std::endl;
             removed = true;
         }catch ( const std::invalid_argument & e ){
             using namespace std;
@@ -115,6 +119,8 @@ void CVideoHandler::switchFrames(void){
             printAllowedIndexes();
             std::vector<int> nums = ArgLoader::getNums(2);
             m_Video.switchframes(nums[0], nums[1]);
+            std::system("clear");
+            std::cout << "Frames at index " << nums[0] <<" and " << nums[1] << " removed." << std::endl;
             switched = true;
         }catch ( const std::invalid_argument & e ){
             using namespace std;

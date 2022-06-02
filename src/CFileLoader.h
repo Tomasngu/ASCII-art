@@ -8,9 +8,9 @@
 #include "CFormatTGA.h"
 #include "CFilterResize.h"
 
-class CImageCheck{
+class CFileLoader{
 public:
-    CImageCheck(const std::string &);
+    CFileLoader(const std::string &);
     const std::string checkImage(void) const;
     CImage getImage(void) const;
     CVideo getImagesInDir(void) const;

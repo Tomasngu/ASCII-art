@@ -149,7 +149,7 @@ const std::string CImageHandler::loadName(void) const{
             name = ArgLoader::getString();
             if(Commands.find(name) != Commands.end() || (m_CustomSet && m_CustomCommands.find(name) != m_CustomCommands.end()) 
                 ||  name ==  "custom" ||  name ==  "back" ||   name ==  "transition" || name ==  "help"){
-                throw std::invalid_argument("Command " + name + "already exists.");
+                throw std::invalid_argument("Command " + name + " already exists.");
             }   
             break;
         }catch ( const std::invalid_argument & e ){

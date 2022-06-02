@@ -21,4 +21,6 @@ private:
     std::vector<CImage> m_Images;
     static constexpr int SPACEBAR = 32;
     static constexpr int END = 'e';
+    static constexpr int sleepCenti = 10000;
+    static constexpr int sleepIn = 100;
 };

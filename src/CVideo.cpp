@@ -14,8 +14,6 @@ void CVideo::switchframes(int idx1, int idx2){
     std::swap(m_Images[idx1], m_Images[idx2]);
 }
 void CVideo::removeFrame(int index){
-    if(index < 0) std::cout << "WUT" << std::endl;
-    if((size_t) index >= m_Images.size() ) std::cout << (size_t) index << ">=" << m_Images.size() << std::endl;
     if((size_t) index >= m_Images.size() || index < 0 ) throw std::invalid_argument("Index out of range.");
     m_Images.erase(m_Images.begin() + index);
 }
@@ -29,16 +27,16 @@ void CVideo::play(void) {
         while (!kbhit()) {
             if(count >= m_Images.size()) return;
             m_Images[count++].render();
-            std::cout << "Pause -- spacebar" << std::endl;
-            std::cout << "End   -- e" << std::endl;
-            sleep(1);
+            std::cout << "Pause     - spacebar" << std::endl;
+            std::cout << "End       - e" << std::endl;
+            usleep(sleepCenti*sleepIn);
         }
         char x;
         if((x = getch()) == EOF) throw std::invalid_argument("GRRR");; /* consume the character */
         if(x == END) return;
         if(x != SPACEBAR) continue;
         while (!kbhit() && getch() != SPACEBAR) {
-            sleep(0.1);
+            usleep(sleepCenti);
         }
     }
 }

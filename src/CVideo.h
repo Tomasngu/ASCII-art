@@ -10,7 +10,7 @@ public:
     CVideo() = default;
     void play(void);
     void addFrame(const CImage &);
-    const CImage & getFrame(int index) const;
+    CImage & getFrame(int index);
     void removeFrame(const CImage & image, int index);
     void switchframes(int idx1, int idx2);
 

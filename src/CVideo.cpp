@@ -3,7 +3,7 @@
 void CVideo::addFrame(const CImage & image){
     m_Images.push_back(std::move(image));
 }
-const CImage & CVideo::getFrame(int index) const{
+CImage & CVideo::getFrame(int index){
     if((size_t) index >= m_Images.size() || index < 0 ) throw std::invalid_argument("Index out of range.");
     return m_Images[index];
 }

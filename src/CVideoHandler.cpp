@@ -5,29 +5,35 @@ CVideoHandler::CVideoHandler(CVideo & video)
 {}
 
 void CVideoHandler::start(void) {
+    m_Video.getFrame(lastShownframe).render();
     showHelp();
     while(true){
-        std::cout << std::endl << "Command: "; 
-        std::string command;
-        std::cin >> command;
-        if(std::cin.eof()) {
-            throw std::invalid_argument("Exited.");
+        try{
+            std::cout << std::endl << "Command: "; 
+            std::string command = ArgLoader::getString();
+            if(command == "exit"){
+                throw std::invalid_argument("Exited.");
+            }
+            else if(command == "help"){
+                showHelp();    
+            }
+            else if(command == "play"){
+                m_Video.play();
+            }
+            else{
+                throw std::invalid_argument(command + " does not exist.");
+            }
         }
-        if(command == "exit"){
-            throw std::invalid_argument("Exited.");
-        }
-        else if(command == "play"){
-            m_Video.play();
-        }
-        else if(command == "help"){
-            // m_Image.render();
-            showHelp();    
-        }
-        else{
-            std:: cout << "Command " + command + " not found." << std::endl; 
+        catch ( const std::invalid_argument & e ){
+            using namespace std;
+            if( e . what () ==  ("CTRL + D."sv) || e . what () ==  ("Exited."sv)  ){
+                throw std::invalid_argument("Exited.");
+            }
+            std::cout << e.what() << std::endl;
         }
     }
 }
+
 
 void CVideoHandler::showHelp(void) const {
     std::cout << 

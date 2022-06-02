@@ -3,7 +3,7 @@
 void CVideo::addFrame(const CImage & image){
     m_Images.push_back(std::move(image));
 }
-CImage & CVideo::getFrame(int index){
+const CImage & CVideo::getFrame(int index){
     if((size_t) index >= m_Images.size() || index < 0 ) throw std::invalid_argument("Index out of range.");
     return m_Images[index];
 }
@@ -13,18 +13,30 @@ void CVideo::switchframes(int idx1, int idx2){
     if((size_t) idx2 >= m_Images.size() || idx2 < 0 ) throw std::invalid_argument("Index out of range.");
     std::swap(m_Images[idx1], m_Images[idx2]);
 }
+void CVideo::removeFrame(int index){
+    if(index < 0) std::cout << "WUT" << std::endl;
+    if((size_t) index >= m_Images.size() ) std::cout << (size_t) index << ">=" << m_Images.size() << std::endl;
+    if((size_t) index >= m_Images.size() || index < 0 ) throw std::invalid_argument("Index out of range.");
+    m_Images.erase(m_Images.begin() + index);
+}
+size_t CVideo::getSize(void){
+    return m_Images.size();
+}
+
 void CVideo::play(void) {
     size_t count = 0;
     while(true){
         while (!kbhit()) {
             if(count >= m_Images.size()) return;
             m_Images[count++].render();
+            std::cout << "Pause -- spacebar" << std::endl;
+            std::cout << "End   -- e" << std::endl;
             sleep(1);
         }
         char x;
         if((x = getch()) == EOF) throw std::invalid_argument("GRRR");; /* consume the character */
-        if(x == 'e') return;
-        if(x != 32) continue;
+        if(x == END) return;
+        if(x != SPACEBAR) continue;
         while (!kbhit() && getch() != 32) {
             sleep(0.1);
         }

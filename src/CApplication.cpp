@@ -6,9 +6,7 @@ void CApplication::Run(void){
     while(true){
         try{
             std::cout << "Enter path to file or directory: ";
-            std::string path;
-            std::cin >> path;
-            if(std::cin.eof()) throw std::invalid_argument("CTRL + D."); 
+            std::string path = ArgLoader::getString();
             CImageCheck check(path);
             std::string type = check.checkImage();
             if(type == "file"){

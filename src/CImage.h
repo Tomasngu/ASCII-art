@@ -8,6 +8,7 @@
 #include<map>
 #include<memory>
 #include<climits>
+#include"ArgLoader.h"
 
 class CImage{
 public:

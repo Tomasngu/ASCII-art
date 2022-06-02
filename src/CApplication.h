@@ -6,6 +6,7 @@
 #include "CImageCheck.h"
 #include "CImageHandler.h"
 #include "CVideoHandler.h"
+#include "ArgLoader.h"
 
 class CApplication{
 public:

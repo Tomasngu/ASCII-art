@@ -18,44 +18,54 @@ std::map<std::string, std::shared_ptr<CFilter>> CImageHandler::Commands =   {{"r
 void CImageHandler::start(void){
     showHelp();
     while(true){
-        std::cout << std::endl << "Command: "; 
-        std::string command;
-        std::cin >> command;
-        if(std::cin.eof()) {
-            throw std::invalid_argument("Exited.");
+        try{
+            std::cout << std::endl << "Command: "; 
+            std::string command = ArgLoader::getString();
+            if(command == "exit"){
+                throw std::invalid_argument("Exited.");
+            }
+            else if(command == "new"){
+                newImage();
+                m_Image.render();
+            }
+            else if(command == "help"){
+                m_Image.render();
+                showHelp();    
+            }
+            else if(command == "transition"){
+                loadTransition();
+                m_Image.render();
+            }
+            else if(command == "custom"){
+                createCustom();
+                m_Image.render();
+            }
+            else if(command == "back"){
+                // ArgLoader::clear();
+                return;
+            }
+            else if(Commands.find(command) != Commands.end()){
+                Commands[command]->edit(m_Image); //Polymorphism
+                m_Image.render();
+            }
+            else if(m_CustomSet && m_CustomCommands.find(command) != m_CustomCommands.end()){
+                for(const auto & com : m_CustomCommands[command]){
+                    com.second->edit(m_Image);
+                }
+                m_Image.render();
+            }
+            else{
+                // m_Image.render();
+                throw std::invalid_argument(command + " does not exist.");
+            }
         }
-        if(command == "exit"){
-            throw std::invalid_argument("Exited.");
-        }
-        else if(command == "new"){
-            newImage();
-            m_Image.render();
-        }
-        else if(command == "help"){
-            m_Image.render();
-            showHelp();    
-        }
-        else if(command == "transition"){
-            loadTransition();
-            m_Image.render();
-        }
-        else if(command == "custom"){
-            createCustom();
-            m_Image.render();
-        }
-        else if(Commands.find(command) != Commands.end()){
-            Commands[command]->edit(m_Image); //Polymorphism
-            m_Image.render();
-        }
-        else if(m_CustomSet && m_CustomCommands.find(command) != m_CustomCommands.end()){
-            for(const auto & com : m_CustomCommands[command]){
-                com.second->edit(m_Image);
+        catch ( const std::invalid_argument & e ){
+            using namespace std;
+            if( e . what () ==  ("CTRL + D."sv) || e . what () ==  ("Exited."sv)  ){
+                throw std::invalid_argument("Exited.");
             }
             m_Image.render();
-        }
-        else{
-            m_Image.render();
-            std:: cout << "Command " + command + " not found." << std::endl; 
+            std::cout << e.what() << std::endl;
         }
     }
 }
@@ -64,11 +74,7 @@ void CImageHandler::newImage(void){
     while(!ImageSet){
         try{
             std::cout << "Enter path to file: ";
-            std::string path;
-            std::cin >> path;
-            if(std::cin.eof()) {
-            throw std::invalid_argument("CTRL + D.");
-        }
+            std::string path = ArgLoader::getString();
             CImageCheck check(path);
             std::string type = check.checkImage();
             if(type != "file") throw std::invalid_argument(path + " is not a file.");
@@ -87,19 +93,23 @@ void CImageHandler::newImage(void){
 void CImageHandler::loadTransition(void){
     bool TransitionSet = false;
     while(!TransitionSet){
-        std::cout << "Choose \"type\" if you want to type the transition yourself." << std::endl;
-        std::cout << "Choose \"file\" if you want to load the transition from file." << std::endl;
-        std::string command;
-        std::cin >> command;
-        if(std::cin.eof()) {
-            throw std::invalid_argument("Exited.");
-        }
-        if(command == "type" || command == "file"){
-            loadTransitionWord(command);
-            TransitionSet = true;
-        }
-        else{
-            std:: cout << "Command " + command + " not found." << std::endl; 
+        try{
+            std::cout << "Choose \"type\" if you want to type the transition yourself." << std::endl;
+            std::cout << "Choose \"file\" if you want to load the transition from file." << std::endl;
+            std::string command = ArgLoader::getString();
+            if(command == "type" || command == "file"){
+                loadTransitionWord(command);
+                TransitionSet = true;
+            }
+            else{
+                throw std::invalid_argument("Command " + command + " not found.");
+            }
+        }catch ( const std::invalid_argument & e ){
+            using namespace std;
+            if( e . what () ==  ("CTRL + D."sv)  ){
+                throw std::invalid_argument("Exited.");
+            }
+            std::cout << e.what() << std::endl;
         }
     }
 }
@@ -109,8 +119,6 @@ void CImageHandler::loadTransitionWord(const std::string & keyword){
     while(!TransitionSet){
         try{
             if(keyword == "type"){
-                std::cin.clear();
-                std::cin.ignore(INT_MAX,'\n');
                 m_Image.loadTransitionType();
                 TransitionSet = true;
             }
@@ -131,16 +139,10 @@ void CImageHandler::loadTransitionWord(const std::string & keyword){
 void CImageHandler::createCustom(void){
     std::vector<std::pair<std::string,std::unique_ptr<CFilter>>> filterList;
     const std::string name = loadName();
-    std::cin.clear();
-    std::cin.ignore(INT_MAX,'\n');
     while(true){
         try{
             std::cout << "Enter your commands separated by whitespace." << std::endl;
-            std::string line;
-            getline(std::cin, line);  
-            if(std::cin.eof()) {
-                throw std::invalid_argument("CTRL + D.");
-            }                      
+            std::string line = ArgLoader::getLine();       
             std::stringstream ss(line);
             if(ss.str().empty()) throw std::invalid_argument("No commands given.");
             std::string com;
@@ -149,6 +151,7 @@ void CImageHandler::createCustom(void){
                     filterList.emplace_back(com, Commands[com]->clone());
                 }
                 else{
+                    filterList.clear();
                     throw std::invalid_argument(com + " not found.");
                 }
             }
@@ -170,14 +173,10 @@ const std::string CImageHandler::loadName(void){
     while(true){
         try{
             std::cout << "Enter name of your custom command." << std::endl;
-            std::cin >> name; 
-            if(name.empty()) throw std::invalid_argument("Empty name.");
-            if(std::cin.eof()) {
-                throw std::invalid_argument("CTRL + D.");
-            }
+            name = ArgLoader::getString();
             if(Commands.find(name) != Commands.end() || m_CustomCommands.find(name) != m_CustomCommands.end() 
                 || name ==  "exit" ||  name ==  "custom" ||  name ==  "new" ||   name ==  "transition" || name ==  "help"){
-                throw std::invalid_argument("Command already exists.");
+                throw std::invalid_argument("Command " + name + "already exists.");
             }   
             break;
         }catch ( const std::invalid_argument & e ){

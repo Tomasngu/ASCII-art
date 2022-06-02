@@ -49,9 +49,7 @@ void CImage::printNum(void) const{
 void CImage::loadTransitionFile(void){
     std::cout << "Enter path to file with your custom transition." << std::endl;
     std::cout << "Transition should start with least dense characters first to the most dense at the end. File should have only one line." << std::endl;
-    std::string path;
-    std::cin >> path;
-    if(std::cin.eof()) throw std::invalid_argument("CTRL + D."); 
+    std::string path = ArgLoader::getString();
     const std::filesystem::path p = path;
     if(!std::filesystem::exists(p)) throw std::invalid_argument("Path to " + path + " does not exist or " + path + " does not exist.");
     if(!std::filesystem::is_regular_file(p)) throw std::invalid_argument(path + " is not a file.");
@@ -77,14 +75,11 @@ void CImage::loadTransitionFile(void){
 void CImage::loadTransitionType(void){
     std::cout << "Type ASCII characters of your preffered transition." << std::endl;
     std::cout << "Transition should start with least dense characters first to the most dense at the end." << std::endl;
-    std::string line;
-    std::getline(std::cin, line);
-    if(std::cin.eof()) throw std::invalid_argument("CTRL + D."); 
+    std::string line = ArgLoader::getLine();
     int chars = 0;
     for(char c: line){
         m_CustomTransition[chars++] = c;
     }
-    if(chars == 0) throw std::invalid_argument("No characters given."); 
     m_CustomSet = true;
     return;
 }

@@ -15,6 +15,7 @@
 #include"CFilterInverse.h"
 #include "CFilterResize.h"
 #include "CImageCheck.h"
+#include "ArgLoader.h"
 
 
 

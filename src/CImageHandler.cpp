@@ -90,7 +90,7 @@ void CImageHandler::newImage(void){
         }
     }
 }
-void CImageHandler::loadTransition(void){
+void CImageHandler::loadTransition(void) const{
     bool TransitionSet = false;
     while(!TransitionSet){
         try{
@@ -114,7 +114,7 @@ void CImageHandler::loadTransition(void){
     }
 }
 
-void CImageHandler::loadTransitionWord(const std::string & keyword){
+void CImageHandler::loadTransitionWord(const std::string & keyword) const{
     bool TransitionSet = false;
     while(!TransitionSet){
         try{
@@ -168,7 +168,7 @@ void CImageHandler::createCustom(void){
     m_CustomSet = true;
 }
 
-const std::string CImageHandler::loadName(void){
+const std::string CImageHandler::loadName(void) const{
     std::string name;
     while(true){
         try{
@@ -190,7 +190,7 @@ const std::string CImageHandler::loadName(void){
     return name;
 }
 
-void CImageHandler::printCustoms(void){
+void CImageHandler::printCustoms(void) const{
     std::cout << "Custom commands:" << std::endl;
     for(const auto & custom: m_CustomCommands){
         std::cout << "\t" <<  custom.first << "     -   ";
@@ -202,7 +202,7 @@ void CImageHandler::printCustoms(void){
     }
 }
 
-void CImageHandler::showHelp(void){
+void CImageHandler::showHelp(void) const{
     std::cout << 
     R"(List of avalaible commands: 
         rotateR     -   rotates image 90° to the right.

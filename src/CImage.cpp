@@ -6,9 +6,6 @@ CImage::CImage( std::uint16_t height,  std::uint16_t width):
     m_Pixels.resize(height, std::vector<std::uint8_t>(width));
 }
 
-void CImage::printmySize(void){
-    std::cout << "Height, Width = " << m_Height << " " << m_Width << std::endl; 
-}
 
 void CImage::render(void){
     std::cout << ANSIClear;

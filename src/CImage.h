@@ -10,11 +10,10 @@
 #include<climits>
 #include"ArgLoader.h"
 
-class CImage{
+struct CImage{
 public:
     CImage(void) = default;
     CImage(std::uint16_t height, std::uint16_t width);
-    void printmySize(void);
     void render(void);
     void rescale(void);
     void printNum(void) const;

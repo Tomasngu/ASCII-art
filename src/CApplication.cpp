@@ -1,24 +1,25 @@
 #include "CApplication.h"
 
-void CApplication::Run(void){
-    std::cout << "\x1B[2J\x1B[H"; //Clear terminal
+void CApplication::Run(void) const{
     printMenu();
     while(true){
         try{
             std::cout << "Enter path to file or directory: ";
             std::string path = ArgLoader::getString();
-            CImageCheck check(path);
+            CFileLoader check(path);
             std::string type = check.checkImage();
             if(type == "file"){
                 CImage image = check.getImage();
                 image.render();
                 CImageHandler handler(image);
                 handler.start();
+                printMenu();
             }
             else if (type == "directory") {
                 CVideo video = check.getImagesInDir();
                 CVideoHandler handler(video);
                 handler.start();
+                printMenu();
                 
             }
         }catch ( const std::invalid_argument & e ){
@@ -32,6 +33,7 @@ void CApplication::Run(void){
 }
 
 void CApplication::printMenu(void) const{
+    std::cout << ANSIClear;
     std::cout << "             _____  _____ _____ _____            _____ _______   __  __       _             "      << std::endl;
     std::cout << "      /\\    / ____|/ ____|_   _|_   _|     /\\   |  __ \\__   __| |  \\/  |     | |            "  << std::endl;
     std::cout << "     /  \\  | (___ | |      | |   | |      /  \\  | |__) | | |    | \\  / | __ _| | _____ _ __   " << std::endl;

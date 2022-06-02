@@ -14,7 +14,6 @@
 #include"CFilterBright.h"
 #include"CFilterInverse.h"
 #include "CFilterResize.h"
-#include "CImageCheck.h"
 #include "ArgLoader.h"
 
 
@@ -29,7 +28,6 @@ public:
 private:
     void showHelp(void) const;
     void printCustoms(void) const;
-    void newImage(void);
     void loadTransition(void) const;
     void loadTransitionWord(const std::string &) const;
     void createCustom(void);

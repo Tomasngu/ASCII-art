@@ -21,12 +21,8 @@ void CImageHandler::start(void){
         try{
             std::cout << std::endl << "Command: "; 
             std::string command = ArgLoader::getString();
-            if(command == "exit"){
-                throw std::invalid_argument("Exited.");
-            }
-            else if(command == "new"){
-                newImage();
-                m_Image.render();
+            if(command == "back"){
+                return;
             }
             else if(command == "help"){
                 m_Image.render();
@@ -39,10 +35,6 @@ void CImageHandler::start(void){
             else if(command == "custom"){
                 createCustom();
                 m_Image.render();
-            }
-            else if(command == "back"){
-                // ArgLoader::clear();
-                return;
             }
             else if(Commands.find(command) != Commands.end()){
                 Commands[command]->edit(m_Image); //Polymorphism
@@ -69,27 +61,7 @@ void CImageHandler::start(void){
         }
     }
 }
-void CImageHandler::newImage(void){
-    bool ImageSet = false;
-    while(!ImageSet){
-        try{
-            std::cout << "Enter path to file: ";
-            std::string path = ArgLoader::getString();
-            CImageCheck check(path);
-            std::string type = check.checkImage();
-            if(type != "file") throw std::invalid_argument(path + " is not a file.");
-            CImage image = check.getImage();
-            m_Image = image;
-            ImageSet = true;
-        }catch ( const std::invalid_argument & e ){
-            using namespace std;
-            if( e . what () ==  ("CTRL + D."sv)  ){
-                throw std::invalid_argument("Exited.");
-            }
-            std::cout << e.what() << std::endl;
-        }
-    }
-}
+
 void CImageHandler::loadTransition(void) const{
     bool TransitionSet = false;
     while(!TransitionSet){
@@ -174,8 +146,8 @@ const std::string CImageHandler::loadName(void) const{
         try{
             std::cout << "Enter name of your custom command." << std::endl;
             name = ArgLoader::getString();
-            if(Commands.find(name) != Commands.end() || m_CustomCommands.find(name) != m_CustomCommands.end() 
-                || name ==  "exit" ||  name ==  "custom" ||  name ==  "new" ||   name ==  "transition" || name ==  "help"){
+            if(Commands.find(name) != Commands.end() || (m_CustomSet && m_CustomCommands.find(name) != m_CustomCommands.end()) 
+                ||  name ==  "custom" ||  name ==  "back" ||   name ==  "transition" || name ==  "help"){
                 throw std::invalid_argument("Command " + name + "already exists.");
             }   
             break;
@@ -215,10 +187,10 @@ void CImageHandler::showHelp(void) const{
         upsize      -   makes the image larger.
         downsize    -   makes the image smaller.
         
-        new         -   sets new image.  
         custom      -   create custom filter.
+        transition  -   load custom ASCII transition.
         help        -   prints this help menu. 
-        exit        -   exits the program. )"
+        back        -   go back to main menu. )"
     << std::endl;
     if(m_CustomSet) printCustoms();
 }

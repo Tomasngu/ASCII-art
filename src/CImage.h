@@ -8,13 +8,14 @@
 #include<map>
 #include<memory>
 #include<climits>
+#include<cassert>
 #include"ArgLoader.h"
 
 struct CImage{
 public:
     CImage(void) = default;
     CImage(std::uint16_t height, std::uint16_t width);
-    void render(void);
+    void render(void) const;
     void rescale(void);
     void printNum(void) const;
     void loadTransitionFile(void);
@@ -25,9 +26,9 @@ public:
     bool isSideWays = false;
 
 private:
-    static std::map<int, char> numtoAscii;
+    static const std::vector<char> numtoAscii;
     static std::map<int, char> numtoAscii2;
-    std::map<int, char> m_CustomTransition;
+    std::vector<char> m_CustomTransition;
     bool m_CustomSet = false;
     static constexpr std::string_view ANSIClear = "\x1B[2J\x1B[H";
 };

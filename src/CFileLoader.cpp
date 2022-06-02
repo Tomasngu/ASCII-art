@@ -31,6 +31,7 @@ void CFileLoader::makePretty(CImage & image) {
 
 CVideo CFileLoader::getImagesInDir(void) const{
     const std::filesystem::path p = m_Path;
+    if(std::filesystem::is_empty(p)) throw std::invalid_argument("Empty directory");
     CVideo video;
     for(auto const & entry : std::filesystem::directory_iterator(p)){
         if(!entry.is_regular_file()) throw std::invalid_argument(entry.path().string() + " is not a file.");

@@ -7,14 +7,16 @@ CImage::CImage( std::uint16_t height,  std::uint16_t width):
 }
 
 
-void CImage::render(void){
+void CImage::render(void) const{
     std::cout << ANSIClear;
     for(int h = 0; h < m_Height; h++){
         for(int w = 0; w < m_Width; w++){
             if(!m_CustomSet) {
+                assert(m_Pixels[h][w]/30 <= numtoAscii.size());
                 std::cout << numtoAscii[m_Pixels[h][w]/30];
             }
             else{
+                assert(m_Pixels[h][w]/(255/m_CustomTransition.size()) <= m_CustomTransition.size());
                 std::cout << m_CustomTransition[m_Pixels[h][w]/(255/m_CustomTransition.size())];
             }
         }
@@ -54,17 +56,15 @@ void CImage::loadTransitionFile(void){
     if(!ifs.good()) throw std::invalid_argument("Failed to read file " + path);
     std::string line;
     int count = 0;
-    int chars = 0;
     while(std::getline(ifs, line)){
         if(line.empty()) continue;
         for(char c: line){
-            m_CustomTransition[chars++] = c;
+            m_CustomTransition.push_back(c);
         }
         count++;
     }
     if(count > 1)  throw std::invalid_argument(path + " has multiple lines.");
     if(!ifs.eof()) throw std::invalid_argument("Reading failed.");
-    if(chars == 0) throw std::invalid_argument("No characters given."); 
     m_CustomSet = true;
     return;
 }
@@ -73,17 +73,18 @@ void CImage::loadTransitionType(void){
     std::cout << "Type ASCII characters of your preffered transition." << std::endl;
     std::cout << "Transition should start with least dense characters first to the most dense at the end." << std::endl;
     std::string line = ArgLoader::getLine();
-    int chars = 0;
     for(char c: line){
-        m_CustomTransition[chars++] = c;
+        m_CustomTransition.push_back(c);
     }
     m_CustomSet = true;
     return;
 }
 
-
-std::map<int, char>  CImage::numtoAscii = {{0,' '}, {1, '.' }, {2, '*' }, {3, ':' },
+/*
+std::map<int, char> numtoAscii = {{0,' '}, {1, '.' }, {2, '*' }, {3, ':' },
     {4, 'o' }, {5, '&' },{6, '8' }, {7, '#' },{8, '@' } };
+*/
+const std::vector<char> CImage::numtoAscii = {' ', '.', '*',  ':' ,  'o' , '&' , '8' ,  '#' , '@' };
 
 std::map<int, char>  CImage::numtoAscii2 = {{0,'.'}, {1,'\''}, {2,'`'}, {3,'^'}, {4,'"'}, {5,','}, {6,':'}, {7,';'}, {8,'I'}, {9,'l'},
  {10,'!'}, {11,'i'}, {12,'>'}, {13,'<'}, {14,'~'}, {15,'+'}, {16,'_'}, {17,'-'}, {18,'?'}, {19,']'}, {20,'['}, {21,'}'}, {22,'{'}, {23,'1'}, 

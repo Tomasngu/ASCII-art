@@ -5,15 +5,16 @@ LIBRARIES = -lstdc++fs
 HEADERS = $(wildcard src/*.h)
 SOURCES = $(wildcard src/*.cpp)
 OBJECTS = $(SOURCES:%.cpp=%.o)
+username = nguyehu7
 
 all: compile doc
 
-compile: app
+compile: $(username)
 
 run: compile
-	./app
+	$(username)
 
-app: $(OBJECTS)
+nguyehu7: $(OBJECTS)
 	$(CXX) $(CXXFLAGS) -o $@ $^  $(LIBRARIES)
 
 %.o: %.cpp
@@ -24,12 +25,12 @@ doc: $(HEADERS) Doxyfile README.md
 
 clean:
 	-rm -rf $(OBJECTS)
-	-rm app
+	-rm $(username)
 	-rm -rf doc/
 
 deps:
 	$(CXX) -MM src/*.cpp > Makefile.d
-	
+
 -include Makefile.d
 
 

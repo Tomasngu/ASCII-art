@@ -6,10 +6,11 @@ HEADERS = $(wildcard src/*.h)
 SOURCES = $(wildcard src/*.cpp)
 OBJECTS = $(SOURCES:%.cpp=%.o)
 
-all: app
+all: compile doc
 
-run: app
-	-rm -f src/*.o
+compile: app
+
+run: compile
 	./app
 
 app: $(OBJECTS)
@@ -18,12 +19,17 @@ app: $(OBJECTS)
 %.o: %.cpp
 	$(CXX) $(CXXFLAGS) -c -o $@ $< 
 
+doc: $(HEADERS) Doxyfile README.md
+	doxygen
+
 clean:
-	-rm -f src/*.o
+	-rm -rf $(OBJECTS)
 	-rm app
-	
+	-rm -rf doc/
+
 deps:
 	$(CXX) -MM src/*.cpp > Makefile.d
+	
 -include Makefile.d
 
 

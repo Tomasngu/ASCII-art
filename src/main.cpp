@@ -21,9 +21,8 @@ int main(void){
     try{
         CApplication app;
         app.Run();
-        return 0;
     }catch ( const std::invalid_argument & e ){
         std::cout << '\n' << e.what() << std::endl;
-        return 1;
     }
+    return 0;
 }

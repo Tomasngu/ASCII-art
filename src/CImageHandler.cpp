@@ -1,18 +1,25 @@
+/**
+ * @file CImageHandler.cpp
+ * @author Huu Quy Nguyen (nguyehu7@fit.cvut.cz)
+ * @date 2022-06-03
+ * 
+ */
+
 #include "CImageHandler.h"
 
-CImageHandler::CImageHandler(CImage & image):
+CImageHandler::CImageHandler(const CImage & image):
 m_Image(image)
 {}
 
-std::map<std::string, std::shared_ptr<CFilter>> CImageHandler::Commands =   {{"rotateR", std::make_shared<CFilterRotateR>(CFilterRotateR())},
-                                                                            {"rotateL", std::make_shared<CFilterRotateL>(CFilterRotateL())},
-                                                                            {"mirror" , std::make_shared<CFilterMirror>(CFilterMirror())},
-                                                                            {"flip" , std::make_shared<CFilterFlip>(CFilterFlip())},
-                                                                            {"bright" , std::make_shared<CFilterBright>(CFilterBright())},
-                                                                            {"dark" , std::make_shared<CFilterDark>(CFilterDark())},
-                                                                            {"invert" , std::make_shared<CFilterInverse>(CFilterInverse())},
-                                                                            {"upsize" , std::make_shared<CFilterResize>(CFilterResize(1.2))},
-                                                                            {"downsize" , std::make_shared<CFilterResize>(CFilterResize(0.8))}
+std::map<std::string, std::shared_ptr<CFilter>> CImageHandler::Commands =   {{CMD_ROTATER, std::make_shared<CFilterRotateR>(CFilterRotateR())},
+                                                                            {CMD_ROTATEL, std::make_shared<CFilterRotateL>(CFilterRotateL())},
+                                                                            {CMD_MIRROR , std::make_shared<CFilterMirror>(CFilterMirror())},
+                                                                            {CMD_FLIP , std::make_shared<CFilterFlip>(CFilterFlip())},
+                                                                            {CMD_BRIGHT , std::make_shared<CFilterBright>(CFilterBright())},
+                                                                            {CMD_DARK  , std::make_shared<CFilterDark>(CFilterDark())},
+                                                                            {CMD_INVERT , std::make_shared<CFilterInverse>(CFilterInverse())},
+                                                                            {CMD_UPSIZE , std::make_shared<CFilterResize>(CFilterResize(UpScale))},
+                                                                            {CMD_DOWNSIZE , std::make_shared<CFilterResize>(CFilterResize(DownScale))}
                                                                             };
 
 void CImageHandler::start(void){
@@ -21,18 +28,18 @@ void CImageHandler::start(void){
         try{
             std::cout << std::endl << "Command: "; 
             std::string command = ArgLoader::getString();
-            if(command == "back"){
+            if(command == CMD_BACK){
                 return;
             }
-            else if(command == "help"){
+            else if(command == CMD_HELP){
                 m_Image.render();
                 showHelp();    
             }
-            else if(command == "transition"){
+            else if(command == CMD_TRANSITION){
                 loadTransition();
                 m_Image.render();
             }
-            else if(command == "custom"){
+            else if(command == CMD_CUSTOM){
                 createCustom();
                 m_Image.render();
                 std::cout << "Custom filter made successfully. Check out help." << std::endl;
@@ -48,14 +55,12 @@ void CImageHandler::start(void){
                 m_Image.render();
             }
             else{
-                // m_Image.render();
                 throw std::invalid_argument(command + " does not exist.");
             }
         }
         catch ( const std::invalid_argument & e ){
-            using namespace std;
-            if( e . what () ==  ("CTRL + D."sv) || e . what () ==  ("Exited."sv)  ){
-                throw std::invalid_argument("Exited.");
+            if(e . what () ==  (EXITED_sv)  ){
+                throw std::invalid_argument(EXITED);
             }
             m_Image.render();
             std::cout << e.what() << std::endl;
@@ -63,14 +68,14 @@ void CImageHandler::start(void){
     }
 }
 
-void CImageHandler::loadTransition(void) const{
+void CImageHandler::loadTransition(void){
     bool TransitionSet = false;
     while(!TransitionSet){
         try{
             std::cout << "Choose \"type\" if you want to type the transition yourself." << std::endl;
             std::cout << "Choose \"file\" if you want to load the transition from file." << std::endl;
             std::string command = ArgLoader::getString();
-            if(command == "type" || command == "file"){
+            if(command == TYPE_t || command == FILE_t){
                 loadTransitionWord(command);
                 TransitionSet = true;
             }
@@ -78,31 +83,29 @@ void CImageHandler::loadTransition(void) const{
                 throw std::invalid_argument("Command " + command + " not found.");
             }
         }catch ( const std::invalid_argument & e ){
-            using namespace std;
-            if( e . what () ==  ("CTRL + D."sv)  ){
-                throw std::invalid_argument("Exited.");
+            if(e . what () ==  (EXITED_sv)  ){
+                throw std::invalid_argument(EXITED);
             }
             std::cout << e.what() << std::endl;
         }
     }
 }
 
-void CImageHandler::loadTransitionWord(const std::string & keyword) const{
+void CImageHandler::loadTransitionWord(const std::string & keyword){
     bool TransitionSet = false;
     while(!TransitionSet){
         try{
-            if(keyword == "type"){
+            if(keyword == TYPE_t){
                 m_Image.loadTransitionType();
                 TransitionSet = true;
             }
-            if(keyword == "file"){
+            if(keyword == FILE_t){
                 m_Image.loadTransitionFile();
                 TransitionSet = true;
             }
         }catch ( const std::invalid_argument & e ){
-            using namespace std;
-            if( e . what () ==  ("CTRL + D."sv)  ){
-                throw std::invalid_argument("Exited.");
+            if(e . what () ==  (EXITED_sv)  ){
+                throw std::invalid_argument(EXITED);
             }
             std::cout << e.what() << std::endl;
         }
@@ -130,9 +133,8 @@ void CImageHandler::createCustom(void){
             }
             break;
         }catch ( const std::invalid_argument & e ){
-            using namespace std;
-            if( e . what () ==  ("CTRL + D."sv)  ){
-                throw std::invalid_argument("Exited.");
+            if(e . what () ==  (EXITED_sv)  ){
+                throw std::invalid_argument(EXITED);
             }
             std::cout << e.what() << std::endl;
         }
@@ -148,14 +150,13 @@ const std::string CImageHandler::loadName(void) const{
             std::cout << "Enter name of your custom command." << std::endl;
             name = ArgLoader::getString();
             if(Commands.find(name) != Commands.end() || (m_CustomSet && m_CustomCommands.find(name) != m_CustomCommands.end()) 
-                ||  name ==  "custom" ||  name ==  "back" ||   name ==  "transition" || name ==  "help"){
+                ||  name ==  CMD_CUSTOM ||  name ==  CMD_BACK||   name == CMD_TRANSITION  || name ==  CMD_HELP){
                 throw std::invalid_argument("Command " + name + " already exists.");
             }   
             break;
         }catch ( const std::invalid_argument & e ){
-            using namespace std;
-            if( e . what () ==  ("CTRL + D."sv)  ){
-                throw std::invalid_argument("Exited.");
+            if(e . what () ==  (EXITED_sv)  ){
+                throw std::invalid_argument(EXITED);
             }
             std::cout << e.what() << std::endl;
         }

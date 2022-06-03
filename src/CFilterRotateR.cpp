@@ -1,3 +1,10 @@
+/**
+ * @file CFilterRotateR.cpp
+ * @author Huu Quy Nguyen (nguyehu7@fit.cvut.cz)
+ * @date 2022-06-03
+ * 
+ */
+
 #include "CFilterRotateR.h"
 
 void CFilterRotateR::edit(CImage & origimage) const {

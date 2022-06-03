@@ -1,7 +1,14 @@
+/**
+ * @file CVideoHandler.cpp
+ * @author Huu Quy Nguyen (nguyehu7@fit.cvut.cz)
+ * @date 2022-06-03
+ * 
+ */
+
 #include"CVideoHandler.h"
 
 CVideoHandler::CVideoHandler(CVideo & video)
-:m_Video(video)
+:m_Video(std::move(video))
 {}
 
 void CVideoHandler::start(void) {
@@ -11,30 +18,30 @@ void CVideoHandler::start(void) {
         try{
             std::cout << std::endl << "Command: "; 
             std::string command = ArgLoader::getString();
-            if(command == "back"){
+            if(command == CMD_BACK){
                 return;
             }
-            else if(command == "help"){
+            else if(command == CMD_HELP){
                 if(m_Video.getSize() > 0) m_Video.getFrame(lastShownframe).render();
                 showHelp();    
             }
-            else if(command == "add"){
+            else if(command == CMD_ADD){
                 addFrame();  
                 m_Video.getFrame(lastShownframe).render();
             }
-            else if(command == "remove"){
-                if(m_Video.getSize() == 0) throw std::invalid_argument("No frames loaded.");
+            else if(command == CMD_REMOVE){
+                if(m_Video.getSize() == 0) throw std::invalid_argument("No images loaded.");
                 removeFrame();
             }
-            else if(command == "play"){
+            else if(command == CMD_PLAY){
                 if(m_Video.getSize() == 0) throw std::invalid_argument("No images loaded.");
                 m_Video.play();
             }
-            else if(command == "switch"){
+            else if(command == CMD_SWITCH){
                 if(m_Video.getSize() <= 1) throw std::invalid_argument("Not enough images loaded.");
                 switchFrames();
             }
-            else if(command == "show"){
+            else if(command == CMD_SHOW){
                 if(m_Video.getSize() == 0) throw std::invalid_argument("No images loaded.");
                 showFrame();
                 m_Video.getFrame(lastShownframe).render();
@@ -44,9 +51,8 @@ void CVideoHandler::start(void) {
             }
         }
         catch ( const std::invalid_argument & e ){
-            using namespace std;
-            if( e . what () ==  ("CTRL + D."sv) || e . what () ==  ("Exited."sv)  ){
-                throw std::invalid_argument("Exited.");
+            if(e . what () ==  (EXITED_sv)  ){
+                throw std::invalid_argument(EXITED);
             }
             std::cout << e.what() << std::endl;
         }
@@ -82,9 +88,8 @@ void CVideoHandler::addFrame(void){
             lastShownframe = (int) (m_Video.getSize() - 1);
             ImageSet = true;
         }catch ( const std::invalid_argument & e ){
-            using namespace std;
-            if( e . what () ==  ("CTRL + D."sv)  ){
-                throw std::invalid_argument("Exited.");
+            if(e . what () ==  (EXITED_sv)  ){
+                throw std::invalid_argument(EXITED);
             }
             std::cout << e.what() << std::endl;
         }
@@ -103,9 +108,8 @@ void CVideoHandler::removeFrame(void){
             std::cout << "Frame at index " << index << " removed." << std::endl;
             removed = true;
         }catch ( const std::invalid_argument & e ){
-            using namespace std;
-            if( e . what () ==  ("CTRL + D."sv)  ){
-                throw std::invalid_argument("Exited.");
+            if(e . what () ==  (EXITED_sv)  ){
+                throw std::invalid_argument(EXITED);
             }
             std::cout << e.what() << std::endl;
         }
@@ -123,9 +127,8 @@ void CVideoHandler::switchFrames(void){
             std::cout << "Frames at index " << nums[0] <<" and " << nums[1] << " switched." << std::endl;
             switched = true;
         }catch ( const std::invalid_argument & e ){
-            using namespace std;
-            if( e . what () ==  ("CTRL + D."sv)  ){
-                throw std::invalid_argument("Exited.");
+            if(e . what () ==  (EXITED_sv)  ){
+                throw std::invalid_argument(EXITED);
             }
             std::cout << e.what() << std::endl;
         }
@@ -143,9 +146,8 @@ void CVideoHandler::showFrame(void) {
             lastShownframe = index;
             shown = true;
         }catch ( const std::invalid_argument & e ){
-            using namespace std;
-            if( e . what () ==  ("CTRL + D."sv)  ){
-                throw std::invalid_argument("Exited.");
+            if(e . what () ==  (EXITED_sv)  ){
+                throw std::invalid_argument(EXITED);
             }
             std::cout << e.what() << std::endl;
         }

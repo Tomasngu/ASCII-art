@@ -1,5 +1,11 @@
-#include "CFilterRotate.h"
+/**
+ * @file CFilterRotate.cpp
+ * @author Huu Quy Nguyen (nguyehu7@fit.cvut.cz)
+ * @date 2022-06-03
+ * 
+ */
 
+#include "CFilterRotate.h"
 
 CImage CFilterRotate::getTransposed(CImage & origimage)const{
     CImage image(origimage.m_Width, origimage.m_Height);

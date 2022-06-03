@@ -1,3 +1,10 @@
+/**
+ * @file CFilterFlip.cpp
+ * @author Huu Quy Nguyen (nguyehu7@fit.cvut.cz)
+ * @date 2022-06-03
+ * 
+ */
+
 #include "CFilterFlip.h"
 
 void CFilterFlip::edit(CImage & image) const {

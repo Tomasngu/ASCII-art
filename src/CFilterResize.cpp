@@ -1,3 +1,10 @@
+/**
+ * @file CFilterResize.cpp
+ * @author Huu Quy Nguyen (nguyehu7@fit.cvut.cz)
+ * @date 2022-06-03
+ * 
+ */
+
 #include "CFilterResize.h"
 
 CFilterResize::CFilterResize(double scale)

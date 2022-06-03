@@ -1,3 +1,10 @@
+/**
+ * @file CFormatBMP.cpp
+ * @author Huu Quy Nguyen (nguyehu7@fit.cvut.cz)
+ * @date 2022-06-03
+ * 
+ */
+
 #include "CFormatBMP.h"
 
 
@@ -7,7 +14,6 @@ CImage CFormatBMP::loadFile(const std::string & fileName ) const{
     validFormat(ifs, fileName, headerDip);
     CImage image(headerDip.Height, headerDip.Width);
     bool upsideDown = true;
-    //TODO compressed
     std::uint32_t padding = (4 - (headerDip.Width*3) % 4) % 4;
     for(std::uint32_t h = 0 ; h < headerDip.Height; ++h){
         for(std::uint32_t w = 0; w < headerDip.Width; ++w){
@@ -53,7 +59,6 @@ bool CFormatBMP::validFormat(std::ifstream & ifs, const std::string & fileName, 
     if(!ifs.good()) throw std::invalid_argument("Reading failed after header " + fileName);
     if(headerDip.bitsPerPixel != 24) throw std::invalid_argument("Each pixel of + "  + fileName + " should have 24 bits.");
     if(headerDip.compression != 0) throw std::invalid_argument(fileName + " should not be compressed.");
-    // if(headerDip.headersize != 124) throw std::invalid_argument(fileName + " should have 124 header size");
     std::uint32_t rowSize = ((headerDip.Width *headerDip.bitsPerPixel+31)/32)*4;
     if(rowSize*headerDip.Height + headerDip.headersize + 14 != header.size) throw std::invalid_argument(fileName + " does not have valid size");
     return true;

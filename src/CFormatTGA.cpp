@@ -1,3 +1,10 @@
+/**
+ * @file CFormatTGA.cpp
+ * @author Huu Quy Nguyen (nguyehu7@fit.cvut.cz)
+ * @date 2022-06-03
+ * 
+ */
+
 #include "CFormatTGA.h"
 
 CImage CFormatTGA::loadFile(const std::string & fileName ) const{
@@ -7,16 +14,8 @@ CImage CFormatTGA::loadFile(const std::string & fileName ) const{
     std::uint16_t Width =  header.Width;
     std::uint16_t Height = header.Height;
     CImage image(Height, Width);
-    // image.printmySize();
-    // std::cout << (int)header.imageType << std:: endl;
-    // std::cout << (int)header.bitsPerPixel << std:: endl;
     
     bool upsideDown = ! (bool) (header.Alpha & (1 << 5) );
-    //TODO compressed image
-    //std::cout << header.bitsPerPixel/8 << std::endl;
-    // int cnt = 0;
-    //std::cout << image.m_Pixels.size() << std::endl;
-    // std::cout << image.m_Pixels[0].size() << std::endl;
     for(int h = 0 ; h < Height; ++h){
         for(int w = 0; w < Width; ++w){
             CFormat::Pixel pix;

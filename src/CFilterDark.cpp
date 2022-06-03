@@ -1,4 +1,12 @@
+/**
+ * @file CFilterDark.cpp
+ * @author Huu Quy Nguyen (nguyehu7@fit.cvut.cz)
+ * @date 2022-06-03
+ * 
+ */
+
 #include"CFilterDark.h"
+
 
 void CFilterDark::edit(CImage & image) const {
     for(int h = 0 ; h < image.m_Height; ++h){

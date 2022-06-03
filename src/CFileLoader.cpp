@@ -1,3 +1,10 @@
+/**
+ * @file CFileLoader.cpp
+ * @author Huu Quy Nguyen (nguyehu7@fit.cvut.cz)
+ * @date 2022-06-03
+ * 
+ */
+
 #include "CFileLoader.h"
 
 CFileLoader::CFileLoader(const std::string & path)
@@ -8,8 +15,8 @@ CFileLoader::CFileLoader(const std::string & path)
 const std::string CFileLoader::checkImage(void) const{
     const std::filesystem::path p = m_Path;
     if(!std::filesystem::exists(p)) throw std::invalid_argument("Path to " + m_Path + " does not exist or " + m_Path + " does not exist.");
-    if(std::filesystem::is_regular_file(p)) return "file";
-    if(std::filesystem::is_directory(p)) return "directory";
+    if(std::filesystem::is_regular_file(p)) return FILE_t;
+    if(std::filesystem::is_directory(p)) return DIR_t;
     throw std::invalid_argument(m_Path + " is not directory nor a file.");
     return "BAD";
 }

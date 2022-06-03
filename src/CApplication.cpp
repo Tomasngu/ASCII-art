@@ -1,3 +1,10 @@
+/**
+ * @file CApplication.cpp
+ * @author Huu Quy Nguyen (nguyehu7@fit.cvut.cz)
+ * @date 2022-06-03
+ * 
+ */
+
 #include "CApplication.h"
 
 void CApplication::Run(void) const{
@@ -8,14 +15,14 @@ void CApplication::Run(void) const{
             std::string path = ArgLoader::getString();
             CFileLoader check(path);
             std::string type = check.checkImage();
-            if(type == "file"){
+            if(type == FILE_t){
                 CImage image = check.getImage();
                 image.render();
                 CImageHandler handler(image);
                 handler.start();
                 printMenu();
             }
-            else if (type == "directory") {
+            else if (type == DIR_t) {
                 CVideo video = check.getImagesInDir();
                 CVideoHandler handler(video);
                 handler.start();
@@ -24,8 +31,8 @@ void CApplication::Run(void) const{
             }
         }catch ( const std::invalid_argument & e ){
             using namespace std;
-            if( e . what () ==  ("CTRL + D."sv) || e . what () ==  ("Exited."sv) ){
-                throw std::invalid_argument("Exited.");
+            if( e . what () ==  (EXITED_sv) ){
+                throw std::invalid_argument(EXITED);
             }
             std::cout << e.what() << std::endl;
         }
@@ -34,7 +41,6 @@ void CApplication::Run(void) const{
 
 void CApplication::printMenu(void) const{
     std::system("clear");
-    //std::cout << ANSIClear;
     std::cout << "             _____  _____ _____ _____            _____ _______   __  __       _             "      << std::endl;
     std::cout << "      /\\    / ____|/ ____|_   _|_   _|     /\\   |  __ \\__   __| |  \\/  |     | |            "  << std::endl;
     std::cout << "     /  \\  | (___ | |      | |   | |      /  \\  | |__) | | |    | \\  / | __ _| | _____ _ __   " << std::endl;

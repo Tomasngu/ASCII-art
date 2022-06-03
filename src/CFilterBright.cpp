@@ -1,3 +1,10 @@
+/**
+ * @file CFilterBright.cpp
+ * @author Huu Quy Nguyen (nguyehu7@fit.cvut.cz)
+ * @date 2022-06-03
+ * 
+ */
+
 #include"CFilterBright.h"
 
 void CFilterBright::edit(CImage & image) const {

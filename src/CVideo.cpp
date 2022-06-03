@@ -1,23 +1,30 @@
+/**
+ * @file CVideo.cpp
+ * @author Huu Quy Nguyen (nguyehu7@fit.cvut.cz)
+ * @date 2022-06-03
+ * 
+ */
+
 #include "CVideo.h"
 
 void CVideo::addFrame(const CImage & image){
     m_Images.push_back(std::move(image));
 }
 const CImage & CVideo::getFrame(int index){
-    if((size_t) index >= m_Images.size() || index < 0 ) throw std::invalid_argument("Index out of range.");
+    if((size_t) index >= m_Images.size() || index < 0 ) throw std::invalid_argument(ERR_RANGE);
     return m_Images[index];
 }
 
 void CVideo::switchframes(int idx1, int idx2){
-    if((size_t) idx1 >= m_Images.size() || idx1 < 0 ) throw std::invalid_argument("Index out of range.");
-    if((size_t) idx2 >= m_Images.size() || idx2 < 0 ) throw std::invalid_argument("Index out of range.");
+    if((size_t) idx1 >= m_Images.size() || idx1 < 0 ) throw std::invalid_argument(ERR_RANGE);
+    if((size_t) idx2 >= m_Images.size() || idx2 < 0 ) throw std::invalid_argument(ERR_RANGE );
     std::swap(m_Images[idx1], m_Images[idx2]);
 }
 void CVideo::removeFrame(int index){
-    if((size_t) index >= m_Images.size() || index < 0 ) throw std::invalid_argument("Index out of range.");
+    if((size_t) index >= m_Images.size() || index < 0 ) throw std::invalid_argument(ERR_RANGE );
     m_Images.erase(m_Images.begin() + index);
 }
-size_t CVideo::getSize(void){
+size_t CVideo::getSize(void) const{
     return m_Images.size();
 }
 
@@ -31,8 +38,7 @@ void CVideo::play(void) {
             std::cout << "End       - e" << std::endl;
             usleep(sleepCenti*sleepIn);
         }
-        char x;
-        if((x = getch()) == EOF) throw std::invalid_argument("GRRR");; /* consume the character */
+        char x = getch();
         if(x == END) return;
         if(x != SPACEBAR) continue;
         while (!kbhit() && getch() != SPACEBAR) {
@@ -40,7 +46,7 @@ void CVideo::play(void) {
         }
     }
 }
-int CVideo::kbhit(void){
+bool CVideo::kbhit(void){
     struct termios oldt, newt;
     int ch;
     int oldf;
@@ -59,10 +65,10 @@ int CVideo::kbhit(void){
     if(ch != EOF)
     {
         ungetc(ch, stdin);
-        return 1;
+        return true;
     }
 
-    return 0;
+    return false;
 }
 
 int CVideo::getch(void)

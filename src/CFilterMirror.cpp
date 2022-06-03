@@ -1,3 +1,10 @@
+/**
+ * @file CFilterMirror.cpp
+ * @author Huu Quy Nguyen (nguyehu7@fit.cvut.cz)
+ * @date 2022-06-03
+ * 
+ */
+
 #include "CFilterMirror.h"
 
 void CFilterMirror::edit(CImage & image) const {

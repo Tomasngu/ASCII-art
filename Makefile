@@ -4,7 +4,7 @@ LIBRARIES = -lstdc++fs
 
 HEADERS = $(wildcard src/*.h)
 SOURCES = $(wildcard src/*.cpp)
-OBJECTS = $(SOURCES:%.cpp=%.o)
+OBJECTS = $(SOURCES:src/%.cpp=obj/%.o)
 username = nguyehu7
 
 all: compile doc
@@ -17,14 +17,15 @@ run: compile
 nguyehu7: $(OBJECTS)
 	$(CXX) $(CXXFLAGS) -o $@ $^  $(LIBRARIES)
 
-%.o: %.cpp
+obj/%.o: src/%.cpp
+	mkdir -p obj
 	$(CXX) $(CXXFLAGS) -c -o $@ $< 
 
 doc: $(HEADERS) Doxyfile README.md
 	doxygen
 
 clean:
-	-rm -rf $(OBJECTS)
+	-rm -rf obj/
 	-rm $(username)
 	-rm -rf doc/
 

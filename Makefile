@@ -12,7 +12,7 @@ all: compile doc
 compile: $(username)
 
 run: compile
-	$(username)
+	./$(username)
 
 nguyehu7: $(OBJECTS)
 	$(CXX) $(CXXFLAGS) -o $@ $^  $(LIBRARIES)

@@ -29,7 +29,7 @@ debug/%.test: tests/%.test.cpp $(filter-out obj/main.o, $(OBJECTS))
 	$(CXX) $(CXXFLAGS) -o $@ $< $(filter-out obj/main.o, $(OBJECTS))  $(LIBRARIES)
 
 test: $(TESTS:tests/%.test.cpp=debug/%.test)
-	
+	./tests/script.sh
 
 
 doc: $(HEADERS) Doxyfile README.md

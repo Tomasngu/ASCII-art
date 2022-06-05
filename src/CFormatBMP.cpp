@@ -44,9 +44,12 @@ bool CFormatBMP::validFormat(std::ifstream & ifs, const std::string & fileName, 
     HeaderBMP header;
     ifs.read(reinterpret_cast<char *>(&header.name), 2);
     ifs.read(reinterpret_cast<char *>(&header.size), 12);
+    if(!ifs.good()) throw std::invalid_argument(fileName + " has wrong header.");
     if(header.name[0] != 'B' || header.name[1] != 'M')throw std::invalid_argument(fileName + " should be type BM.");
     
     ifs.read(reinterpret_cast<char *>(&headerDip.headersize), sizeof(headerDip.headersize));
+    if(!ifs.good()) throw std::invalid_argument(fileName + " has wrong header.");
+    if(headerDip.headersize > 124) throw std::invalid_argument(fileName + " has invalid header size.");
     ifs.read(reinterpret_cast<char *>(&headerDip.Width), sizeof(headerDip.Width));
     ifs.read(reinterpret_cast<char *>(&headerDip.Height), sizeof(headerDip.Height));
     ifs.read(reinterpret_cast<char *>(&headerDip.plane), sizeof(headerDip.plane));
@@ -57,7 +60,7 @@ bool CFormatBMP::validFormat(std::ifstream & ifs, const std::string & fileName, 
     ifs.read(reinterpret_cast<char *>(&headerDip.garbage), (headerDip.headersize-sum));
 
     if(!ifs.good()) throw std::invalid_argument("Reading failed after header " + fileName);
-    if(headerDip.bitsPerPixel != 24) throw std::invalid_argument("Each pixel of + "  + fileName + " should have 24 bits.");
+    if(headerDip.bitsPerPixel != 24) throw std::invalid_argument("Each pixel of "  + fileName + " should have 24 bits.");
     if(headerDip.compression != 0) throw std::invalid_argument(fileName + " should not be compressed.");
     std::uint32_t rowSize = ((headerDip.Width *headerDip.bitsPerPixel+31)/32)*4;
     if(rowSize*headerDip.Height + headerDip.headersize + 14 != header.size) throw std::invalid_argument(fileName + " does not have valid size");

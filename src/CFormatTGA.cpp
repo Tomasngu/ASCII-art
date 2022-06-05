@@ -42,7 +42,7 @@ bool CFormatTGA::validFormat(std::ifstream & ifs, const std::string & fileName, 
     if(header.ID_length != (std::uint8_t) 0x0) throw std::invalid_argument(fileName + " should have 0 ID Length.");
     if(header.colorMapType != (std::uint8_t) 0x0) throw std::invalid_argument(fileName + " should have no color map type.");
     if(header.imageType != (std::uint8_t) 0x2) throw std::invalid_argument(fileName + " should have image type 2.");
-    if(header.bitsPerPixel != 24) throw std::invalid_argument("Each pixel of + "  + fileName + " should have 24 bits.");
+    if(header.bitsPerPixel != 24) throw std::invalid_argument("Each pixel of "  + fileName + " should have 24 bits.");
     ifs.seekg(0, std::ios::end);
     unsigned int length = ifs.tellg();
     if(header.Height * header.Width * 3 + sizeof(header) != length) throw std::invalid_argument(fileName + " does not have valid size");

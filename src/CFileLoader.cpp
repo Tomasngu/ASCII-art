@@ -40,11 +40,18 @@ CVideo CFileLoader::getImagesInDir(void) const{
     const std::filesystem::path p = m_Path;
     if(std::filesystem::is_empty(p)) throw std::invalid_argument("Empty directory");
     CVideo video;
+    std::set<std::string> fileNames;
     for(auto const & entry : std::filesystem::directory_iterator(p)){
         if(!entry.is_regular_file()) throw std::invalid_argument(entry.path().string() + " is not a file.");
-        CImage image = getOneImageDir(entry.path().string());
+        fileNames.insert(entry.path().string());
+        //CImage image = getOneImageDir(entry.path().string());
+        // video.addFrame(image);
+    }
+    for(const auto & str: fileNames){
+        CImage image = getOneImageDir(str);
         video.addFrame(image);
     }
+
     return video;
 }
 

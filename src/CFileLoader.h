@@ -9,6 +9,7 @@
 #include <string>
 #include <filesystem>
 #include <vector>
+#include <set>
 #include "CImage.h"
 #include "CVideo.h"
 #include "CFormatBMP.h"

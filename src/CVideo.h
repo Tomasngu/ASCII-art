@@ -86,5 +86,5 @@ private:
      * @brief Sleep coefficient in centiseconds.
      * 
      */
-    static constexpr int sleepIn = 100;
+    static constexpr int sleepIn = 50;
 };

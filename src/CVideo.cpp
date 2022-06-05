@@ -84,4 +84,5 @@ int CVideo::getch(void)
   if(ch == EOF) throw std::invalid_argument("GRRR");
   tcsetattr(STDIN_FILENO, TCSANOW, &oldt); /*reapply the old settings */
   return ch; /*return received char */
+  
 }

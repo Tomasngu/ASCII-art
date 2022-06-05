@@ -76,6 +76,7 @@ void CImage::loadTransitionFile(void){
     }
     if(count > 1)  throw std::invalid_argument(path + " has multiple lines.");
     if(!ifs.eof()) throw std::invalid_argument("Reading failed.");
+    if(chars.empty()) throw std::invalid_argument("Empty file.");
     std::vector<char> custom(chars.begin(), chars.end());
     m_CustomTransition = custom;
     m_CustomSet = true;

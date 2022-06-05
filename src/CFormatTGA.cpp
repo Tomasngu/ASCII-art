@@ -38,7 +38,7 @@ CImage CFormatTGA::loadFile(const std::string & fileName ) const{
 bool CFormatTGA::validFormat(std::ifstream & ifs, const std::string & fileName, HeaderTGA & header)const{
     if(!ifs.good()) throw std::invalid_argument("Failed to read file " + fileName);
     ifs.read(reinterpret_cast<char *>(&header), sizeof(header));
-    if(!ifs.good()) throw std::invalid_argument("Reading failed after header " + fileName);
+    if(!ifs.good()) throw std::invalid_argument(fileName + " has invalid header");
     if(header.ID_length != (std::uint8_t) 0x0) throw std::invalid_argument(fileName + " should have 0 ID Length.");
     if(header.colorMapType != (std::uint8_t) 0x0) throw std::invalid_argument(fileName + " should have no color map type.");
     if(header.imageType != (std::uint8_t) 0x2) throw std::invalid_argument(fileName + " should have image type 2.");

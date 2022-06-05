@@ -81,8 +81,7 @@ int CVideo::getch(void)
   newt.c_lflag &= ~(ICANON | ECHO); /* make one change to old settings in new settings */
   tcsetattr(STDIN_FILENO, TCSANOW, &newt); /*apply the new settings immediatly */
   ch = getchar(); /* standard getchar call */
-  if(ch == EOF) throw std::invalid_argument("GRRR");
   tcsetattr(STDIN_FILENO, TCSANOW, &oldt); /*reapply the old settings */
   return ch; /*return received char */
-  
+
 }

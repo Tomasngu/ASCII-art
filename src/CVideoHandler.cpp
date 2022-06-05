@@ -104,7 +104,7 @@ void CVideoHandler::removeFrame(void){
             int index = ArgLoader::getNums(1)[0];
             m_Video.removeFrame(index);
             lastShownframe = 0;
-            std::system("clear");
+            std::cout << ANSI_CLEAR;
             std::cout << "Frame at index " << index << " removed." << std::endl;
             removed = true;
         }catch ( const std::invalid_argument & e ){
@@ -123,7 +123,7 @@ void CVideoHandler::switchFrames(void){
             printAllowedIndexes();
             std::vector<int> nums = ArgLoader::getNums(2);
             m_Video.switchframes(nums[0], nums[1]);
-            std::system("clear");
+            std::cout << ANSI_CLEAR;
             std::cout << "Frames at index " << nums[0] <<" and " << nums[1] << " switched." << std::endl;
             switched = true;
         }catch ( const std::invalid_argument & e ){

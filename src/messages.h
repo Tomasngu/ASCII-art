@@ -43,5 +43,6 @@ const std::string CMD_PLAY = "play";
 const std::string CMD_SWITCH = "switch";
 const std::string CMD_SHOW = "show";
 
+const std::string ANSI_CLEAR = "\x1B[2J\x1B[H";
 
 

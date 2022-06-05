@@ -15,7 +15,7 @@ CImage::CImage( std::uint16_t height,  std::uint16_t width):
 
 
 void CImage::render(void) const{
-    std::system("clear");
+    std::cout << ANSI_CLEAR;
     for(int h = 0; h < m_Height; h++){
         for(int w = 0; w < m_Width; w++){
             printASCII(h, w);

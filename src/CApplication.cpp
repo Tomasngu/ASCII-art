@@ -40,7 +40,7 @@ void CApplication::Run(void) const{
 }
 
 void CApplication::printMenu(void) const{
-    std::system("clear");
+    std::cout << ANSI_CLEAR;
     std::cout << "             _____  _____ _____ _____            _____ _______   __  __       _             "      << std::endl;
     std::cout << "      /\\    / ____|/ ____|_   _|_   _|     /\\   |  __ \\__   __| |  \\/  |     | |            "  << std::endl;
     std::cout << "     /  \\  | (___ | |      | |   | |      /  \\  | |__) | | |    | \\  / | __ _| | _____ _ __   " << std::endl;

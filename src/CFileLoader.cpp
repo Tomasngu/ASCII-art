@@ -44,8 +44,6 @@ CVideo CFileLoader::getImagesInDir(void) const{
     for(auto const & entry : std::filesystem::directory_iterator(p)){
         if(!entry.is_regular_file()) throw std::invalid_argument(entry.path().string() + " is not a file.");
         fileNames.insert(entry.path().string());
-        //CImage image = getOneImageDir(entry.path().string());
-        // video.addFrame(image);
     }
     for(const auto & str: fileNames){
         CImage image = getOneImageDir(str);

@@ -21,6 +21,8 @@ public:
      * @param video given video
      */
     explicit CVideoHandler(CVideo & video);
+    CVideoHandler (const CVideoHandler &) = delete;
+    CVideoHandler & operator =(const CVideoHandler &) = delete;
     /**
      * @brief Start menu with commands.
      * 

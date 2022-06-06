@@ -34,6 +34,9 @@ public:
      * @param image Given image.
      */
     explicit CImageHandler(const CImage & image);
+    CImageHandler (const CImageHandler &) = delete;
+    CImageHandler & operator =(const CImageHandler &) = delete;
+
     /**
      * @brief Start menu for image editing.
      * 

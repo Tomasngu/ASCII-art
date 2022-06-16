@@ -9,3 +9,5 @@ An ASCII ART Maker application which can show images in ASCII.
 
 ## How to use
 Use simple commands to navigate throughout the application. 
+
+![alt text](pic.png "Title")

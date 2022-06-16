@@ -1,4 +1,4 @@
-# Innspired by example semestral project https://gitlab.fit.cvut.cz/bernhdav/pa2-bomb-tag/blob/master/Makefile
+# Inspired by example semestral project https://gitlab.fit.cvut.cz/bernhdav/pa2-bomb-tag/blob/master/Makefile
 
 CXX=g++
 CXXFLAGS = -Wall -pedantic -std=c++17 -g
@@ -18,7 +18,7 @@ run: compile
 	./$(username)
 
 nguyehu7: $(OBJECTS)
-	$(CXX) $(CXXFLAGS) -o $@ $^  $(LIBRARIES)
+	$(CXX) $(CXXFLAGS) -o $@ $^  
 
 obj/%.o: src/%.cpp
 	mkdir -p $(@D)
@@ -26,7 +26,7 @@ obj/%.o: src/%.cpp
 
 debug/%.test: tests/%.test.cpp $(filter-out obj/main.o, $(OBJECTS))
 	mkdir -p $(@D)
-	$(CXX) $(CXXFLAGS) -o $@ $< $(filter-out obj/main.o, $(OBJECTS))  $(LIBRARIES)
+	$(CXX) $(CXXFLAGS) -o $@ $< $(filter-out obj/main.o, $(OBJECTS)) 
 
 test: $(TESTS:tests/%.test.cpp=debug/%.test)
 	./tests/script.sh

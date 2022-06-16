@@ -5,7 +5,7 @@ An ASCII ART Maker application which can show images in ASCII.
 * Applies simple filters to the image. Allows user to create custom filter combining filters.
 * Loads custom ASCII transition.
 * Allows you to play an animation from multiple images. 
-* Simple video editing 
+* Simple animation editing 
 
 ## How to use
 Use simple commands to navigate throughout the application. 
